@@ -1,0 +1,50 @@
+{
+  "header": {
+    "name": "Alexander Bess",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "contact": "Contact"
+    }
+  },
+  "hero": {
+    "title": "Alexander Bess",
+    "subtitle": "Full-Stack Developer | Vue.js | TypeScript | Node.js",
+    "projectsBtn": "My Projects",
+    "contactBtn": "Contact Me"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "I am a Full-Stack developer with experience in creating modern web applications. I specialize in the JavaScript ecosystem, including Vue.js, React, Node.js, and TypeScript.",
+    "passion": "My passion is creating elegant and efficient solutions to complex problems. I am constantly learning new technologies and approaches to development.",
+    "experience": "Work Experience",
+    "projectsCount": "Projects",
+    "skills": "Technical Skills"
+  },
+  "projects": {
+    "title": "My Projects",
+    "liveDemo": "Live Demo",
+    "github": "GitHub"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "I'm always open to new opportunities and interesting projects. Get in touch!",
+    "letsConnect": "Let's Connect",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "social": "Social Networks",
+    "sendMessage": "Send Message",
+    "name": "Name",
+    "emailPlaceholder": "your@email.com",
+    "message": "Message",
+    "messagePlaceholder": "Your message...",
+    "sending": "Sending...",
+    "sendSuccess": "Message sent successfully!",
+    "sendError": "Error sending message. Please try again."
+  },
+  "common": {
+    "backToHome": "Back to Home"
+  }
+}

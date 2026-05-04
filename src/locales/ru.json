@@ -1,0 +1,50 @@
+{
+  "header": {
+    "name": "Александр Бесс",
+    "nav": {
+      "home": "Главная",
+      "about": "Обо мне",
+      "projects": "Проекты",
+      "contact": "Контакты"
+    }
+  },
+  "hero": {
+    "title": "Александр Бесс",
+    "subtitle": "Full-Stack разработчик | Vue.js | TypeScript | Node.js",
+    "projectsBtn": "Мои проекты",
+    "contactBtn": "Связаться со мной"
+  },
+  "about": {
+    "title": "Обо мне",
+    "description": "Я - Full-Stack разработчик с опытом создания современных веб-приложений. Специализируюсь на JavaScript экосистеме, включая Vue.js, React, Node.js и TypeScript.",
+    "passion": "Моя страсть - создавать элегантные и эффективные решения сложных проблем. Я постоянно изучаю новые технологии и подходы к разработке.",
+    "experience": "Опыт работы",
+    "projectsCount": "Проекты",
+    "skills": "Технические навыки"
+  },
+  "projects": {
+    "title": "Мои проекты",
+    "liveDemo": "Live Demo",
+    "github": "GitHub"
+  },
+  "contact": {
+    "title": "Контакты",
+    "subtitle": "Я всегда открыт к новым возможностям и интересным проектам. Свяжитесь со мной!",
+    "letsConnect": "Давайте общаться",
+    "email": "Email",
+    "phone": "Телефон",
+    "location": "Локация",
+    "social": "Социальные сети",
+    "sendMessage": "Отправить сообщение",
+    "name": "Имя",
+    "emailPlaceholder": "your@email.com",
+    "message": "Сообщение",
+    "messagePlaceholder": "Ваше сообщение...",
+    "sending": "Отправка...",
+    "sendSuccess": "Сообщение успешно отправлено!",
+    "sendError": "Ошибка при отправке сообщения. Попробуйте еще раз."
+  },
+  "common": {
+    "backToHome": "Вернуться на главную"
+  }
+}
