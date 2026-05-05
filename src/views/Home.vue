@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PhysicBlock />
     <Hero />
     <About />
     <Projects />
@@ -8,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import PhysicBlock from '../components/PhysicBlock.vue'
 import Hero from '../components/Hero.vue'
 import About from '../components/About.vue'
 import Projects from '../components/Projects.vue'

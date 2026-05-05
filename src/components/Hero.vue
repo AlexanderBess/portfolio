@@ -1,5 +1,5 @@
 <template>
-  <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-white pt-16">
+  <section id="home" class="min-h-screen flex items-center justify-center from-primary-50 to-white pt-16">
     <div class="container mx-auto px-6 text-center">
       <div class="animate-fade-in-up">
         <h1 class="text-5xl md:text-7xl font-bold text-gray-900 mb-6">

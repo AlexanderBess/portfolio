@@ -1,0 +1,174 @@
+// Colors
+$colors: (
+  // Dark theme
+  'dark-primary': #111827,
+  'dark-secondary': #1f2937,
+  'dark-tertiary': #292929,
+  'dark-quaternary': #292929,
+  'dark-quinary': #8f8f8f,
+  'dark-text': #fafafa,
+  'dark-text-secondary': #8f8f8f,
+  'dark-text-tertiary': #8f8f8f,
+  'dark-border': #292929,
+  'dark-background': #0f0f0f,
+  'dark-surface': #0f0f0f,
+  
+  // Light theme
+  'light-primary': #ffffff,
+  'light-secondary': #f3f4f6,
+  'light-tertiary': #8f8f8f,
+  'light-quaternary': #8f8f8f,
+  'light-quinary': #8f8f8f,
+  'light-text': #000000,
+  'light-text-secondary': #999,
+  'light-text-tertiary': #8f8f8f,
+  'light-border': #8f8f8f,
+  'light-background': #fafafa,
+  'light-surface': #fafafa,
+  
+  // Accent colors
+  'accent-primary': #2563eb,
+  'accent-hover': #1d4ed8,
+  'accent-active': #1e40af,
+  
+  // Theme toggle
+  'sun-color': #fbbf24,
+  'moon-color': #8f8f8f,
+  'sun-color-light': #f59e0b,
+  'moon-color-light': #8f8f8f,
+  
+  // Transitions
+  'transition-fast': 0.2s ease,
+  'transition-normal': 0.4s ease,
+  'transition-slow': 0.6s ease,
+  'transition-smooth': 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+);
+
+// Breakpoints
+$breakpoints: (
+  'mobile': 320px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'wide': 1200px,
+  'ultrawide': 1440px,
+);
+
+// Spacing
+$spacing: (
+  'xs': 4px,
+  'sm': 8px,
+  'md': 16px,
+  'lg': 24px,
+  'xl': 32px,
+  'xxl': 48px,
+  'xxxl': 64px,
+);
+
+// Font sizes
+$font-sizes: (
+  'xs': 0.75rem,
+  'sm': 0.875rem,
+  'base': 1rem,
+  'lg': 1.125rem,
+  'xl': 1.25rem,
+  '2xl': 1.5rem,
+  '3xl': 1.875rem,
+  '4xl': 2.25rem,
+  '5xl': 3rem,
+  '6xl': 3.75rem,
+  '7xl': 4.5rem,
+);
+
+// Border radius
+$border-radius: (
+  'none': 0,
+  'sm': 4px,
+  'md': 8px,
+  'lg': 12px,
+  'xl': 16px,
+  'full': 50%,
+);
+
+// Z-index
+$z-index: (
+  'base': 1,
+  'dropdown': 10,
+  'sticky': 20,
+  'fixed': 30,
+  'modal': 40,
+  'popover': 50,
+  'tooltip': 60,
+);
+
+@use 'sass:map';
+
+// Mixins
+@mixin mobile-only {
+  @media (max-width: #{map.get($breakpoints, 'tablet') - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: #{map.get($breakpoints, 'tablet')}) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: #{map.get($breakpoints, 'desktop')}) {
+    @content;
+  }
+}
+
+@mixin wide-up {
+  @media (min-width: #{map.get($breakpoints, 'wide')}) {
+    @content;
+  }
+}
+
+@mixin transition($properties: all, $duration: 'normal') {
+  transition: $properties map.get($colors, $duration);
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin backdrop-blur($amount: 8px) {
+  backdrop-filter: blur($amount);
+}
+
+// Functions
+@function theme-color($key) {
+  @return map.get($colors, $key);
+}
+
+@function spacing($key) {
+  @return map.get($spacing, $key);
+}
+
+@function font-size($key) {
+  @return map.get($font-sizes, $key);
+}
+
+@function radius($key) {
+  @return map.get($border-radius, $key);
+}
+
+@function z($key) {
+  @return map.get($z-index, $key);
+}

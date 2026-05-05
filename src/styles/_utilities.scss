@@ -1,0 +1,236 @@
+// Import variables for mixins and functions
+@use 'variables' as *;
+
+// Theme utilities
+.theme-dark {
+  background-color: theme-color(dark-background);
+  color: theme-color(dark-text);
+}
+
+.theme-light {
+  background-color: theme-color(light-background);
+  color: theme-color(light-text);
+}
+
+// Text color utilities
+.text-primary {
+  color: theme-color(dark-text);
+}
+
+.text-secondary {
+  color: theme-color(dark-text-secondary);
+}
+
+.text-tertiary {
+  color: theme-color(dark-text-tertiary);
+}
+
+.text-accent {
+  color: theme-color(accent-primary);
+}
+
+// Background utilities
+.bg-primary {
+  background-color: theme-color(dark-primary);
+}
+
+.bg-secondary {
+  background-color: theme-color(dark-secondary);
+}
+
+.bg-surface {
+  background-color: theme-color(dark-surface);
+  @include backdrop-blur();
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+// Border utilities
+.border-primary {
+  border-color: theme-color(dark-border);
+}
+
+.border-secondary {
+  border-color: theme-color(dark-tertiary);
+}
+
+// Hover utilities
+.hover-bg-secondary:hover {
+  background-color: theme-color(dark-secondary);
+}
+
+.hover-text-primary:hover {
+  color: theme-color(dark-text);
+}
+
+.hover-accent:hover {
+  color: theme-color(accent-primary);
+}
+
+// Flex utilities
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @include flex-center();
+}
+
+.flex-between {
+  @include flex-between();
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Spacing utilities
+.p-xs { padding: spacing(xs); }
+.p-sm { padding: spacing(sm); }
+.p-md { padding: spacing(md); }
+.p-lg { padding: spacing(lg); }
+.p-xl { padding: spacing(xl); }
+
+.px-xs { padding: 0 spacing(xs); }
+.px-sm { padding: 0 spacing(sm); }
+.px-md { padding: 0 spacing(md); }
+.px-lg { padding: 0 spacing(lg); }
+.px-xl { padding: 0 spacing(xl); }
+
+.py-xs { padding: spacing(xs) 0; }
+.py-sm { padding: spacing(sm) 0; }
+.py-md { padding: spacing(md) 0; }
+.py-lg { padding: spacing(lg) 0; }
+.py-xl { padding: spacing(xl) 0; }
+
+.m-xs { margin: spacing(xs); }
+.m-sm { margin: spacing(sm); }
+.m-md { margin: spacing(md); }
+.m-lg { margin: spacing(lg); }
+.m-xl { margin: spacing(xl); }
+
+.mx-xs { margin: 0 spacing(xs); }
+.mx-sm { margin: 0 spacing(sm); }
+.mx-md { margin: 0 spacing(md); }
+.mx-lg { margin: 0 spacing(lg); }
+.mx-xl { margin: 0 spacing(xl); }
+
+.my-xs { margin: spacing(xs) 0; }
+.my-sm { margin: spacing(sm) 0; }
+.my-md { margin: spacing(md) 0; }
+.my-lg { margin: spacing(lg) 0; }
+.my-xl { margin: spacing(xl) 0; }
+
+.gap-xs { gap: spacing(xs); }
+.gap-sm { gap: spacing(sm); }
+.gap-md { gap: spacing(md); }
+.gap-lg { gap: spacing(lg); }
+.gap-xl { gap: spacing(xl); }
+
+// Typography utilities
+.text-xs { font-size: font-size(xs); }
+.text-sm { font-size: font-size(sm); }
+.text-base { font-size: font-size(base); }
+.text-lg { font-size: font-size(lg); }
+.text-xl { font-size: font-size(xl); }
+.text-2xl { font-size: font-size(2xl); }
+.text-3xl { font-size: font-size(3xl); }
+.text-4xl { font-size: font-size(4xl); }
+.text-5xl { font-size: font-size(5xl); }
+
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+// Border radius utilities
+.rounded-none { border-radius: radius(none); }
+.rounded-sm { border-radius: radius(sm); }
+.rounded-md { border-radius: radius(md); }
+.rounded-lg { border-radius: radius(lg); }
+.rounded-xl { border-radius: radius(xl); }
+.rounded-full { border-radius: radius(full); }
+
+// Position utilities
+.fixed { position: fixed; }
+.absolute { position: absolute; }
+.relative { position: relative; }
+.sticky { position: sticky; }
+
+.top-0 { top: 0; }
+.left-0 { left: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+
+// Size utilities
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+// Z-index utilities
+.z-base { z-index: z(base); }
+.z-dropdown { z-index: z(dropdown); }
+.z-sticky { z-index: z(sticky); }
+.z-fixed { z-index: z(fixed); }
+.z-modal { z-index: z(modal); }
+.z-popover { z-index: z(popover); }
+
+// Transition utilities
+.transition-fast { @include transition(all, fast); }
+.transition-normal { @include transition(all, normal); }
+.transition-slow { @include transition(all, slow); }
+.transition-colors { @include transition(color, normal); }
+.transition-background { @include transition(background-color, normal); }
+.transition-border { @include transition(border-color, normal); }
+
+// Cursor utilities
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+
+// Visibility utilities
+.hidden { display: none; }
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+
+// Text utilities
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-decoration-none { text-decoration: none; }
+
+// Theme-specific utilities
+.theme-light {
+  .text-primary { color: theme-color(light-text); }
+  .text-secondary { color: theme-color(light-text-secondary); }
+  .text-tertiary { color: theme-color(light-text-tertiary); }
+  
+  .bg-primary { background-color: theme-color(light-primary); }
+  .bg-secondary { background-color: theme-color(light-secondary); }
+  .bg-surface { background-color: theme-color(light-surface); }
+  
+  .border-primary { border-color: theme-color(light-border); }
+  .border-secondary { border-color: theme-color(light-tertiary); }
+  
+  .hover-bg-secondary:hover { background-color: theme-color(light-secondary); }
+  .hover-text-primary:hover { color: theme-color(light-text); }
+}
+
+.theme-dark {
+  .text-primary { color: theme-color(dark-text); }
+  .text-secondary { color: theme-color(dark-text-secondary); }
+  .text-tertiary { color: theme-color(dark-text-tertiary); }
+  
+  .bg-primary { background-color: theme-color(dark-primary); }
+  .bg-secondary { background-color: theme-color(dark-secondary); }
+  .bg-surface { background-color: theme-color(dark-surface); }
+  
+  .border-primary { border-color: theme-color(dark-border); }
+  .border-secondary { border-color: theme-color(dark-tertiary); }
+  
+  .hover-bg-secondary:hover { background-color: theme-color(dark-secondary); }
+  .hover-text-primary:hover { color: theme-color(dark-text); }
+}

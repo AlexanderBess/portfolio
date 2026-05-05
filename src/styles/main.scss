@@ -1,0 +1,58 @@
+// Import variables and utilities
+@use 'variables' as *;
+@use 'utilities' as *;
+
+// CSS Custom Properties for theme transitions
+:root {
+  // Light theme defaults
+  --bg-primary: #{theme-color(light-background)};
+  --bg-surface: #{theme-color(light-surface)};
+  --bg-secondary: #{theme-color(light-secondary)};
+  --text-primary: #{theme-color(light-text)};
+  --text-secondary: #{theme-color(light-text-secondary)};
+  --text-tertiary: #{theme-color(light-text-tertiary)};
+  --border-primary: #{theme-color(light-border)};
+  --border-secondary: #{theme-color(light-tertiary)};
+  --accent-primary: #{theme-color(accent-primary)};
+  --sun-color: #{theme-color(sun-color-light)};
+  --moon-color: #{theme-color(moon-color-light)};
+  
+  // Transition duration for theme changes
+  --theme-transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #{theme-color(dark-background)};
+  --bg-surface: #{theme-color(dark-surface)};
+  --bg-secondary: #{theme-color(dark-secondary)};
+  --text-primary: #{theme-color(dark-text)};
+  --text-secondary: #{theme-color(dark-text-secondary)};
+  --text-tertiary: #{theme-color(dark-text-tertiary)};
+  --border-primary: #{theme-color(dark-border)};
+  --border-secondary: #{theme-color(dark-tertiary)};
+  --accent-primary: #{theme-color(accent-primary)};
+  --sun-color: #{theme-color(sun-color)};
+  --moon-color: #{theme-color(moon-color)};
+}
+
+// Global styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  transition: var(--theme-transition);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: var(--theme-transition);
+}
