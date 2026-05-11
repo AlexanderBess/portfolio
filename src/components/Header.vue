@@ -195,6 +195,7 @@ onMounted(() => {
   }
 
   &__brand {
+    width: 160px;
     font-size: font-size('xl');
     font-weight: 700;
     color: var(--text-primary);

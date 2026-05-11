@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="portfolio">
     <PhysicBlock />
     <Hero />
     <About />
@@ -15,3 +15,12 @@ import About from '../components/About.vue'
 import Projects from '../components/Projects.vue'
 import Contact from '../components/Contact.vue'
 </script>
+
+<style lang="scss" scoped>
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+</style>
+
