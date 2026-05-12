@@ -10,6 +10,7 @@
             {{ $t('about.passion') }}
           </p>
         </div>
+      <img src="@/assets/images/PNG/me.png" alt="Alex Bess" class="about__image">
       </div>
   </section>
 </template>
@@ -24,6 +25,21 @@
   padding: 80px 60px;
   background-color: var(--bg-primary);
 
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+  }
+
+  &__image {
+    max-width: 400px;
+    height: fit-content;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
   &__title {
     width: 100%;
     font-family: "Geist", "Geist Placeholder", sans-serif;
@@ -34,6 +50,7 @@
 
   &__info {
     display: flex;
+    flex-direction: column;
     gap: 50px;
     width: 100%;
   }
@@ -46,12 +63,22 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 1200px) {
   .about {
     padding: 40px 40px;
 
     &__info {
-      flex-direction: column;
       gap: 20px;
     }
   }
