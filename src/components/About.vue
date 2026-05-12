@@ -32,8 +32,13 @@ import forestImage from "@/assets/images/PNG/forest.png";
 @use '../styles/variables' as *;
 
 .about {
-  padding: 80px 60px;
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 60px 40px;
   background-color: var(--bg-primary);
+  transition: var(--theme-transition);
 
   &__container {
     display: flex;

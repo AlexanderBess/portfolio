@@ -1,117 +1,150 @@
-<template>
-  <section id="projects" class="py-20 bg-gray-50">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">{{ $t('projects.title') }}</h2>
-        <div class="w-20 h-1 bg-primary-600 mx-auto"></div>
-      </div>
+<script setup lang="ts">
+const EXPERIENCES = [
+  {
+    year: '2019',
+    role: 'Web Developer',
+    company: 'Chrono',
+  },
+  {
+    year: '2021',
+    role: 'Frontend Developer',
+    company: 'Crypton Studio',
+  },
+  {
+    year: '2022',
+    role: 'Frontend Developer',
+    company: 'Tenzor',
+  },
+  {
+    year: '2023',
+    role: 'Frontend Developer',
+    company: 'Anketolog',
+  },
+  {
+    year: '2023',
+    role: 'Frontend Developer',
+    company: 'WSender',
+  },
+  {
+    year: '2024 - Present',
+    role: 'Frontend Developer',
+    company: 'EMCD',
+  },
+] as const;
+</script>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div 
-          v-for="project in projects" 
-          :key="project.id"
-          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-        >
-          <div class="h-48 bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
-            <div class="text-white text-center p-4">
-              <h3 class="text-2xl font-bold mb-2">{{ project.title }}</h3>
-            </div>
-          </div>
-          
-          <div class="p-6">
-            <p class="text-gray-600 mb-4">{{ project.description }}</p>
-            
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span 
-                v-for="tech in project.technologies" 
-                :key="tech"
-                class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm"
-              >
-                {{ tech }}
-              </span>
-            </div>
-            
-            <div class="flex gap-4">
-              <a 
-                :href="project.liveUrl" 
-                target="_blank"
-                class="flex-1 text-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                {{ $t('projects.liveDemo') }}
-              </a>
-              <a 
-                :href="project.githubUrl" 
-                target="_blank"
-                class="flex-1 text-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors"
-              >
-                {{ $t('projects.github') }}
-              </a>
-            </div>
-          </div>
+<template>
+  <section class="experiences">
+    <div class="experiences__sidebar">
+      <h2 class="experiences__title">{{ $t("projects.experiences") }}</h2>
+    </div>
+
+    <div class="experiences__grid">
+      <div
+          v-for="item in EXPERIENCES"
+          :key="item.company"
+          class="experience-card"
+      >
+        <span class="experience-card__year">{{ item.year }}</span>
+
+        <div class="experience-card__content">
+          <h3 class="experience-card__role">{{ item.role }}</h3>
+          <p class="experience-card__company">{{ item.company }}</p>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
-interface Project {
-  id: number
-  title: string
-  description: string
-  technologies: string[]
-  liveUrl: string
-  githubUrl: string
+<style scoped lang="scss">
+.experiences {
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background-color: transparent;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+
+  &__sidebar {
+    flex: 0 0 25%; // Занимает 1/4 ширины
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  &__grid {
+    flex: 1;
+    display: grid;
+    // Создаем 4 колонки, которые сжимаются на мелких экранах
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'E-commerce Platform',
-    description: 'Полнофункциональная платформа электронной коммерции с панелью администратора, корзиной покупок и системой оплаты.',
-    technologies: ['Vue.js', 'TypeScript', 'Node.js', 'MongoDB', 'Stripe'],
-    liveUrl: 'https://example-ecommerce.com',
-    githubUrl: 'https://github.com/username/ecommerce-platform'
-  },
-  {
-    id: 2,
-    title: 'Task Management App',
-    description: 'Приложение для управления задачами с drag-and-drop интерфейсом, реальным временем совместной работы и уведомлениями.',
-    technologies: ['React', 'TypeScript', 'Express', 'PostgreSQL', 'Socket.io'],
-    liveUrl: 'https://example-tasks.com',
-    githubUrl: 'https://github.com/username/task-manager'
-  },
-  {
-    id: 3,
-    title: 'Weather Dashboard',
-    description: 'Интерактивная панель погоды с прогнозами, картами и детальной метеорологической информацией для разных городов.',
-    technologies: ['Vue.js', 'Tailwind CSS', 'OpenWeather API', 'Chart.js'],
-    liveUrl: 'https://example-weather.com',
-    githubUrl: 'https://github.com/username/weather-dashboard'
-  },
-  {
-    id: 4,
-    title: 'Social Media Analytics',
-    description: 'Платформа для аналитики социальных сетей с визуализацией данных, отчетами и экспортом в различные форматы.',
-    technologies: ['Nuxt.js', 'TypeScript', 'Python', 'Redis', 'D3.js'],
-    liveUrl: 'https://example-analytics.com',
-    githubUrl: 'https://github.com/username/social-analytics'
-  },
-  {
-    id: 5,
-    title: 'Blog Platform',
-    description: 'Современная платформа для блогов с markdown редактором, комментариями, тегами и SEO оптимизацией.',
-    technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'MDX'],
-    liveUrl: 'https://example-blog.com',
-    githubUrl: 'https://github.com/username/blog-platform'
-  },
-  {
-    id: 6,
-    title: 'Portfolio Generator',
-    description: 'Генератор портфолио для разработчиков с настраиваемыми шаблонами, предварительным просмотром и экспортом.',
-    technologies: ['Vue.js', 'TypeScript', 'Vite', 'Tailwind CSS'],
-    liveUrl: 'https://example-portfolio.com',
-    githubUrl: 'https://github.com/username/portfolio-generator'
+.experience-card {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; // Расстояние между годом и текстом
+
+  &__year {
+    font-size: 20px;
+    color: var(--text-secondary);
+    font-weight: 400;
   }
-]
-</script>
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__role {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  &__company {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+// Адаптация для планшетов и мобильных устройств
+@media (max-width: 1024px) {
+  .experiences {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 20px;
+
+    &__sidebar {
+      width: 100%;
+    }
+
+    &__grid {
+      width: 100%;
+      grid-template-columns: repeat(2, 1fr); // 2 колонки на планшетах
+      gap: 40px 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .experiences__grid {
+    grid-template-columns: 1fr; // 1 колонка на мобилках
+    gap: 32px;
+  }
+
+  .experience-card {
+    gap: 12px;
+  }
+}
+</style>

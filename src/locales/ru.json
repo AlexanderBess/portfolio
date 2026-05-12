@@ -26,7 +26,8 @@
   "projects": {
     "title": "Мои проекты",
     "liveDemo": "Live Demo",
-    "github": "GitHub"
+    "github": "GitHub",
+    "experiences": "Опыт"
   },
   "contact": {
     "title": "Контакты",
