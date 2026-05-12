@@ -10,12 +10,22 @@
             {{ $t('about.passion') }}
           </p>
         </div>
-      <img src="@/assets/images/PNG/me.png" alt="Alex Bess" class="about__image">
+        <div class="about__image-wrapper">
+          <image-card
+            :background-image-url="forestImage"
+            :foreground-image-url="meImage"
+            alt-text="Alex Bess"
+            :text="$t('about.img-text')"
+          />
+        </div>
       </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import ImageCard from "./ImageCard.vue";
+import meImage from "@/assets/images/PNG/me.png";
+import forestImage from "@/assets/images/PNG/forest.png";
 </script>
 
 <style lang="scss" scoped>
@@ -32,7 +42,19 @@
     gap: 50px;
   }
 
+  &__image-wrapper {
+    width: stretch;
+    max-width: 400px;
+    height: fit-content;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
   &__image {
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--text-primary);
     width: stretch;
     max-width: 400px;
     height: fit-content;
@@ -43,13 +65,13 @@
 
   &__title {
     width: 100%;
-    font-family: "Geist", "Geist Placeholder", sans-serif;
     font-size: 30px;
     font-weight: 500;
     color: var(--light-secondary);
   }
 
   &__info {
+    font-family: "Geist", "Geist Placeholder", sans-serif;
     display: flex;
     flex-direction: column;
     gap: 50px;
