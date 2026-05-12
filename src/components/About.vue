@@ -33,6 +33,7 @@
   }
 
   &__image {
+    width: stretch;
     max-width: 400px;
     height: fit-content;
     opacity: 0;
@@ -58,7 +59,7 @@
   &__description {
     width: 100%;
     font-size: 18px;
-    color: theme-color('light-text-secondary');
+    color: var(--light-text-secondary);
     line-height: 1.75;
   }
 }
@@ -80,6 +81,15 @@
 
     &__info {
       gap: 20px;
+    }
+  }
+}
+
+@media (max-width: 890px) {
+  .about {
+    &__container {
+      flex-direction: column;
+      gap: 30px;
     }
   }
 }
