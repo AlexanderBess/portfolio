@@ -27,7 +27,14 @@
     "title": "My Projects",
     "liveDemo": "Live Demo",
     "github": "GitHub",
-    "experiences": "Experiences"
+    "experiences": "Experiences",
+    "visit_site": "Visit website",
+    "chrono_desc": "Engineered interactive interfaces featuring 3D graphics and complex animations. Integrated logistics (DHL) and social APIs to automate core business processes.",
+    "crypton_desc": "Developed Web3 interfaces for smart contract interaction. Delivered secure frontend solutions for blockchain ecosystems and p2p platforms.",
+    "tenzor_desc": "Architected and developed scalable UI components for enterprise-level software. Optimized frontend-to-database interactions for high-load systems.",
+    "anketolog_desc": "Designed the application architecture and logic for a comprehensive survey platform. Built adaptive survey builders with a focus on UX and high conversion rates.",
+    "wsender_desc": "Architected the project from the ground up and implemented core frontend logic. Developed complex business logic and interfaces for marketing automation services.",
+    "emcd_desc": "Led a full-scale ecosystem migration from Vue 2 to Vue 3 (Composition API). Developed P2P platforms, real-time WebSocket chats, and B2B dashboards with advanced analytics."
   },
   "contact": {
     "title": "Contact",

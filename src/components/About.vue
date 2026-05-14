@@ -120,4 +120,20 @@ import forestImage from "@/assets/images/PNG/forest.png";
     }
   }
 }
+
+@media (max-width: 768px) {
+  .about {
+    padding: 40px 20px;
+    &__title {
+      font-size: 24px;
+    }
+    &__description {
+      font-size: 16px;
+    }
+    &__container {
+      flex-direction: column;
+      gap: 30px;
+    }
+  }
+}
 </style>
