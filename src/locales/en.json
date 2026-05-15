@@ -37,7 +37,9 @@
     "emcd_desc": "Led a full-scale ecosystem migration from Vue 2 to Vue 3 (Composition API). Developed P2P platforms, real-time WebSocket chats, and B2B dashboards with advanced analytics."
   },
   "skills": {
-    "communication": "Communication"
+    "communication": "Communication",
+    "hide": "Click to hide",
+    "show_details": "Click to open"
   },
   "contact": {
     "title": "Contact",
