@@ -3,6 +3,7 @@
     <PhysicBlock />
     <Hero />
     <About />
+    <Skills />
     <Projects />
     <Contact />
   </div>
@@ -14,6 +15,7 @@ import Hero from '../components/Hero.vue'
 import About from '../components/About.vue'
 import Projects from '../components/Projects.vue'
 import Contact from '../components/Contact.vue'
+import Skills from "@/components/Skills.vue";
 </script>
 
 <style lang="scss" scoped>

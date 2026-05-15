@@ -36,6 +36,9 @@
     "wsender_desc": "Architected the project from the ground up and implemented core frontend logic. Developed complex business logic and interfaces for marketing automation services.",
     "emcd_desc": "Led a full-scale ecosystem migration from Vue 2 to Vue 3 (Composition API). Developed P2P platforms, real-time WebSocket chats, and B2B dashboards with advanced analytics."
   },
+  "skills": {
+    "communication": "Communication"
+  },
   "contact": {
     "title": "Contact",
     "subtitle": "I'm always open to new opportunities and interesting projects. Get in touch!",
