@@ -10,8 +10,8 @@
         <!-- Navigation Links -->
         <div class="header__nav-list">
           <a href="#home" class="header__nav-link">{{ t('header.nav.home') }}</a>
-          <a href="#about" class="header__nav-link">{{ t('header.nav.about') }}</a>
-          <a href="#projects" class="header__nav-link">{{ t('header.nav.projects') }}</a>
+          <a href="#experience" class="header__nav-link">{{ t('header.nav.experience') }}</a>
+          <a href="#contact" class="header__nav-link">{{ t('header.nav.contact') }}</a>
         </div>
 
         <!-- Right Side Controls -->
@@ -69,8 +69,8 @@
       <!-- Mobile menu -->
       <div v-if="isMobileMenuOpen" class="header__mobile-menu">
         <a href="#home" class="header__mobile-link">{{ t('header.nav.home') }}</a>
-        <a href="#about" class="header__mobile-link">{{ t('header.nav.about') }}</a>
-        <a href="#projects" class="header__mobile-link">{{ t('header.nav.projects') }}</a>
+        <a href="#experience" class="header__mobile-link">{{ t('header.nav.experience') }}</a>
+        <a href="#contact" class="header__mobile-link">{{ t('header.nav.contact') }}</a>
         
         <!-- Mobile Language Switcher -->
         <div class="header__mobile-lang">
@@ -96,77 +96,88 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+// --- GLOBAL APP STATE ---
 const { t, locale } = useI18n()
 const isMobileMenuOpen = ref(false)
 const isDark = ref(true)
 
+/**
+ * MOBILE NAVIGATION
+ * Handlers for toggling the responsive menu overlay.
+ */
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
+/**
+ * INTERNATIONALIZATION (i18n)
+ * Switches app language and persists the choice in LocalStorage.
+ */
 const changeLanguage = (lang: string) => {
   locale.value = lang
   localStorage.setItem('locale', lang)
-  isMobileMenuOpen.value = false
+  isMobileMenuOpen.value = false // Auto-close menu after selection
 }
 
+/**
+ * THEME ENGINE
+ * Orchestrates theme switching across different layers:
+ * 1. Vue reactive state (isDark)
+ * 2. LocalStorage persistence
+ * 3. Native DOM attributes (data-theme)
+ * 4. Specific component class overrides
+ */
 const toggleTheme = () => {
   isDark.value = !isDark.value
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-  
-  // Apply theme using data attribute for CSS custom properties
-  if (isDark.value) {
-    document.documentElement.setAttribute('data-theme', 'dark')
-    document.documentElement.classList.add('dark')
-    // Add dark class to portfolio block
-    const portfolioElement = document.querySelector('.portfolio')
-    if (portfolioElement) {
-      portfolioElement.classList.add('portfolio--dark')
-      portfolioElement.classList.remove('portfolio--light')
-    }
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light')
-    document.documentElement.classList.remove('dark')
-    // Add light class to portfolio block
-    const portfolioElement = document.querySelector('.portfolio')
-    if (portfolioElement) {
-      portfolioElement.classList.add('portfolio--light')
-      portfolioElement.classList.remove('portfolio--dark')
-    }
+  const themeMode = isDark.value ? 'dark' : 'light'
+
+  localStorage.setItem('theme', themeMode)
+
+  // Update root element for global CSS variables access
+  document.documentElement.setAttribute('data-theme', themeMode)
+  document.documentElement.classList.toggle('dark', isDark.value)
+
+  // --- PORTFOLIO-SPECIFIC THEME SYNC ---
+  // Ensuring the portfolio block receives proper styling context
+  const portfolioElement = document.querySelector('.portfolio')
+  if (portfolioElement) {
+    portfolioElement.classList.toggle('portfolio--dark', isDark.value)
+    portfolioElement.classList.toggle('portfolio--light', !isDark.value)
   }
 }
 
-// Initialize theme on mount
+/**
+ * INITIALIZATION (Hydration)
+ * Restores user preferences from LocalStorage upon component mount.
+ */
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme')
-  // Default to dark theme if no saved theme or if saved theme is not 'light'
+
+  // Logic defaults to 'dark' if no preference is found
   if (savedTheme === 'light') {
     isDark.value = false
     document.documentElement.setAttribute('data-theme', 'light')
     document.documentElement.classList.remove('dark')
-    // Set portfolio to light theme
+
     const portfolioElement = document.querySelector('.portfolio')
     if (portfolioElement) {
       portfolioElement.classList.add('portfolio--light')
-      portfolioElement.classList.remove('portfolio--dark')
     }
   } else {
-    // Default to dark theme
+    // Default or Dark preference
     isDark.value = true
     document.documentElement.setAttribute('data-theme', 'dark')
     document.documentElement.classList.add('dark')
-    // Set portfolio to dark theme
+
     const portfolioElement = document.querySelector('.portfolio')
     if (portfolioElement) {
       portfolioElement.classList.add('portfolio--dark')
-      portfolioElement.classList.remove('portfolio--light')
     }
   }
 })
 </script>
 
 <style lang="scss">
-// Import variables, utilities and SASS modules
 @use 'sass:map';
 @use '../styles/variables' as *;
 @use '../styles/utilities' as *;

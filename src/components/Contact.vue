@@ -1,136 +1,51 @@
 <template>
-  <section id="contact" class="py-20 bg-white">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4">{{ $t('contact.title') }}</h2>
-        <div class="w-20 h-1 bg-primary-600 mx-auto"></div>
-        <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-          {{ $t('contact.subtitle') }}
-        </p>
-      </div>
+  <section id="contact" class="contact-morph" ref="target">
+    <div
+        class="contact-morph__container"
+        :class="{ 'contact-morph__container--visible': isVisible }"
+    >
+      <h2 class="contact-morph__title">{{ t("contact.title") }}</h2>
 
-      <div class="max-w-4xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Contact Info -->
-          <div class="space-y-6">
-            <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ $t('contact.letsConnect') }}</h3>
-            
-            <div class="space-y-4">
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <p class="font-medium text-gray-900">{{ $t('contact.email') }}</p>
-                  <a href="mailto:alexander.bess@example.com" class="text-primary-600 hover:underline">
-                    alexander.bess@example.com
-                  </a>
-                </div>
-              </div>
+      <div
+          class="contact-morph__wrapper"
+          @mouseenter="isHovered = true"
+          @mouseleave="isHovered = false"
+      >
+        <div
+            class="contact-morph__main"
+            :class="{ 'contact-morph__main--split': isHovered }"
+        >
+          <a
+              href="https://t.me/Alex_Sage"
+              target="_blank"
+              class="contact-morph__button contact-morph__button--left"
+          >
+            <span class="contact-morph__text contact-morph__text--desktop">
+              {{ isHovered ? 'TELEGRAM' : t("contact.first_button") }}
+            </span>
+            <span class="contact-morph__text contact-morph__text--mobile">
+              TELEGRAM
+            </span>
+          </a>
 
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <p class="font-medium text-gray-900">{{ $t('contact.phone') }}</p>
-                  <a href="tel:+79991234567" class="text-primary-600 hover:underline">
-                    +7 (999) 123-45-67
-                  </a>
-                </div>
-              </div>
+          <span
+              class="contact-morph__middle-text"
+              :class="{ 'contact-morph__middle-text--visible': isHovered }"
+          >
+            {{ t('contact.where_to_start') }}
+          </span>
 
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <p class="font-medium text-gray-900">{{ $t('contact.location') }}</p>
-                  <p class="text-gray-600">Москва, Россия</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Social Links -->
-            <div class="pt-6">
-              <h4 class="font-medium text-gray-900 mb-4">{{ $t('contact.social') }}</h4>
-              <div class="flex space-x-4">
-                <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-primary-100 transition-colors">
-                  <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                </a>
-                <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-primary-100 transition-colors">
-                  <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
-                <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-primary-100 transition-colors">
-                  <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Contact Form -->
-          <div class="bg-gray-50 p-8 rounded-xl">
-            <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ $t('contact.sendMessage') }}</h3>
-            
-            <form @submit.prevent="handleSubmit" class="space-y-4">
-              <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('contact.name') }}</label>
-                <input
-                  id="name"
-                  v-model="form.name"
-                  type="text"
-                  required
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-                  :placeholder="$t('contact.name')"
-                />
-              </div>
-
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('contact.email') }}</label>
-                <input
-                  id="email"
-                  v-model="form.email"
-                  type="email"
-                  required
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-                  :placeholder="$t('contact.emailPlaceholder')"
-                />
-              </div>
-
-              <div>
-                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">{{ $t('contact.message') }}</label>
-                <textarea
-                  id="message"
-                  v-model="form.message"
-                  rows="4"
-                  required
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none resize-none"
-                  :placeholder="$t('contact.messagePlaceholder')"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                :disabled="isSubmitting"
-                class="w-full px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {{ isSubmitting ? $t('contact.sending') : $t('contact.sendMessage') }}
-              </button>
-            </form>
-          </div>
+          <a
+              href="mailto:alexbessmelcev@gmail.com"
+              class="contact-morph__button contact-morph__button--right"
+          >
+            <span class="contact-morph__text contact-morph__text--desktop">
+              {{ isHovered ? 'EMAIL' : t("contact.second_button") }}
+            </span>
+            <span class="contact-morph__text contact-morph__text--mobile">
+              EMAIL
+            </span>
+          </a>
         </div>
       </div>
     </div>
@@ -138,48 +53,152 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-interface ContactForm {
-  name: string
-  email: string
-  message: string
-}
+const { t } = useI18n();
+const isHovered = ref(false);
+const isVisible = ref(false);
+const target = ref<HTMLElement | null>(null);
 
-const { t } = useI18n()
+onMounted(() => {
+  const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          isVisible.value = true;
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.2 }
+  );
+  if (target.value) observer.observe(target.value);
+});
+</script>
 
-const form = ref<ContactForm>({
-  name: '',
-  email: '',
-  message: ''
-})
+<style lang="scss" scoped>
+.contact-morph {
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  background: var(--bg-primary);
+  overflow: hidden;
 
-const isSubmitting = ref(false)
+  &__container {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 
-const handleSubmit = async () => {
-  isSubmitting.value = true
-  
-  try {
-    // Здесь будет логика отправки формы
-    console.log('Form submitted:', form.value)
-    
-    // Имитация отправки
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // Сброс формы
-    form.value = {
-      name: '',
-      email: '',
-      message: ''
+    &--visible {
+      opacity: 1;
+      transform: translateY(0);
     }
-    
-    alert(t('contact.sendSuccess'))
-  } catch (error) {
-    console.error('Error submitting form:', error)
-    alert(t('contact.sendError'))
-  } finally {
-    isSubmitting.value = false
+  }
+
+  &__title {
+    font-size: clamp(18px, 4vw, 22px);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+  }
+
+  &__wrapper {
+    display: inline-block;
+    width: 100%;
+  }
+
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+
+    @media (min-width: 769px) {
+      gap: 0;
+      &--split { gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  &__button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    border: 1px solid var(--border-secondary);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    @media (min-width: 769px) {
+      min-width: 200px;
+      &--left { border-radius: 100px 0 0 100px; border-right: none; }
+      &--right { border-radius: 0 100px 100px 0; }
+
+      .contact-morph__main--split & {
+        border-radius: 100px;
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        min-width: 150px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      max-width: 340px;
+      border-radius: 100px;
+      background: var(--bg-surface);
+      border-color: var(--border-primary);
+    }
+  }
+
+  &__text {
+    &--mobile {
+      display: none;
+      @media (max-width: 768px) { display: block; }
+    }
+    &--desktop {
+      display: block;
+      @media (max-width: 768px) { display: none; }
+    }
+  }
+
+  &__middle-text {
+    @media (min-width: 769px) {
+      width: 0;
+      opacity: 0;
+      white-space: nowrap;
+      transition: all 0.6s ease;
+      overflow: hidden;
+      color: var(--text-tertiary);
+
+      &--visible {
+        width: 160px;
+        opacity: 1;
+        margin: 0 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      display: block;
+      margin: 10px 0;
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
   }
 }
-</script>
+</style>

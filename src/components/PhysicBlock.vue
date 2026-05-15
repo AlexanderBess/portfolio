@@ -1,245 +1,201 @@
 <template>
-  <div ref="sceneContainer" class="physics-scene">
-    <div
-        v-for="(item, index) in items"
-        :key="index"
-        :ref="el => { if (el) itemRefs[index] = el }"
-        class="physics-body"
-        :class="item.class"
-        :style="getStyles(index)"
-    >
-      <span v-if="item.hasDot" class="dot"></span>
-      <span class="text">{{ item.text }}</span>
-      <span v-if="item.icon" class="icon">{{ item.icon }}</span>
+  <section id="home">
+    <div ref="sceneContainer" class="physics-scene">
+      <div
+          v-for="(item, index) in items"
+          :key="index"
+          :ref="el => { if (el) itemRefs[index] = el }"
+          class="physics-body"
+          :class="item.class"
+          :style="getStyles(index)"
+      >
+        <span v-if="item.hasDot" class="dot"></span>
+        <span class="text">{{ item.text }}</span>
+        <span v-if="item.icon" class="icon">{{ item.icon }}</span>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, reactive, nextTick } from 'vue';
 import Matter from 'matter-js';
 
-// Функция для вычисления адаптивных позиций
-const getResponsivePositions = (width) => {
-  if (width < 768) {
-    // Мобильные устройства
-    return [
-      { text: 'FRONTEND', class: 'pill', x: width * 0.2, y: 60 },
-      { text: 'DEVELOPER', class: 'pill', x: width * 0.5, y: 80 },
-      { text: 'VUE', class: 'pill', x: width * 0.7, y: 100 },
-      { text: 'SASS', class: 'pill', hasDot: true, x: width * 0.8, y: 60 },
-      { text: '★', class: 'circle', icon: '★', x: width * 0.9, y: 70 }
-    ];
-  } else {
-    // Десктоп
-    return [
-      { text: 'FRONTEND', class: 'pill', x: width * 0.2, y: 80 },
-      { text: 'DEVELOPER', class: 'pill', x: width * 0.4, y: 100 },
-      { text: 'VUE', class: 'pill', x: width * 0.6, y: 120 },
-      { text: 'SASS', class: 'pill', hasDot: true, x: width * 0.75, y: 80 },
-      { text: '★', class: 'circle', icon: '★', x: width * 0.9, y: 90 }
-    ];
-  }
+/**
+ * REPOSNSIVE LAYOUT CONFIGURATION
+ * Defines initial splash positions for physical bodies based on viewport width.
+ */
+const getResponsivePositions = (width: number) => {
+  const isMobile = width < 768;
+  const config = isMobile
+      ? { frontend: 0.2, dev: 0.5, vue: 0.7, sass: 0.8, star: 0.9, yBase: 60 }
+      : { frontend: 0.2, dev: 0.4, vue: 0.6, sass: 0.75, star: 0.9, yBase: 80 };
+
+  return [
+    { text: 'FRONTEND', class: 'pill', x: width * config.frontend, y: config.yBase },
+    { text: 'DEVELOPER', class: 'pill', x: width * config.dev, y: config.yBase + 20 },
+    { text: 'VUE', class: 'pill', x: width * config.vue, y: config.yBase + 40 },
+    { text: 'SASS', class: 'pill', hasDot: true, x: width * config.sass, y: config.yBase },
+    { text: '★', class: 'circle', icon: '★', x: width * config.star, y: config.yBase + 10 }
+  ];
 };
 
-// 1. Данные элементов
+// --- STATE MANAGEMENT ---
 const items = reactive(getResponsivePositions(window.innerWidth));
+const sceneContainer = ref<HTMLElement | null>(null);
+const itemRefs = ref<HTMLElement[]>([]);
 
-const sceneContainer = ref(null);
-const itemRefs = ref([]);
-
-// Храним динамические координаты для рендеринга во Vue
+/** * MIRROR STATE
+ * Reactive bridge between Matter.js calculations and Vue's DOM updates.
+ * This object holds the calculated physics data to be applied via CSS.
+ */
 const bodiesCoords = reactive(
     items.map(() => ({ x: 0, y: 0, angle: 0 }))
 );
 
-let engine, runner, bodies = [];
-let resizeObserver = null;
-let walls = { ground: null, ceiling: null, leftWall: null, rightWall: null };
+let engine: Matter.Engine,
+    runner: Matter.Runner,
+    bodies: Matter.Body[] = [];
+let resizeObserver: ResizeObserver | null = null;
+let walls: Record<string, Matter.Body | null> = { ground: null, ceiling: null, leftWall: null, rightWall: null };
 
-// Получение стилей для синхронизации HTML с физическим телом
-const getStyles = (index) => {
+/**
+ * DOM-PHYSICS SYNCHRONIZATION
+ * Maps physics engine coordinates to CSS Transform properties.
+ * translate(-50%, -50%) ensures the Matter.js center of mass aligns with the HTML element center.
+ */
+const getStyles = (index: number) => {
   const coord = bodiesCoords[index];
   if (!coord) return {};
-  // Добавляем translate(-50%, -50%), чтобы точка [x,y] была центром элемента
   return {
     transform: `translate3d(${coord.x}px, ${coord.y}px, 0) translate(-50%, -50%) rotate(${coord.angle}rad)`
   };
 };
 
 onMounted(async () => {
-  await nextTick(); // Ждем, пока Vue отрендерит элементы в DOM для замера их размеров
+  // Ensure DOM elements are rendered to calculate accurate bounding boxes
+  await nextTick();
 
-  const container = sceneContainer.value;
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+  const container = sceneContainer.value!;
+  const { clientWidth: width, clientHeight: height } = container;
 
-  // 1. Инициализация физического движка
+  // --- ENGINE SETUP ---
   engine = Matter.Engine.create({
-    gravity: { x: 0, y: 1.2 } // Увеличил гравитацию для более быстрого оседания
+    gravity: { x: 0, y: 1.2 } // Slightly higher gravity for "snappy" settling effect
   });
-  const world = engine.world;
 
-  // Функция обновления границ физического мира
-  const updateWalls = (width, height) => {
+  /**
+   * BOUNDARY MANAGEMENT
+   * Reconstructs static walls on resize to prevent elements from falling out of frame.
+   */
+  const updateWalls = (w: number, h: number) => {
     const wallThickness = 100;
     const wallOptions = { isStatic: true };
 
-    // Удаляем старые стены
-    if (walls.ground) Matter.Composite.remove(world, walls.ground);
-    if (walls.ceiling) Matter.Composite.remove(world, walls.ceiling);
-    if (walls.leftWall) Matter.Composite.remove(world, walls.leftWall);
-    if (walls.rightWall) Matter.Composite.remove(world, walls.rightWall);
+    // Cleanup previous boundaries from the world
+    Object.values(walls).forEach(wall => {
+      if (wall) Matter.Composite.remove(engine.world, wall);
+    });
 
-    // Создаем новые стены
-    walls.ground = Matter.Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, wallOptions);
-    walls.ceiling = Matter.Bodies.rectangle(width / 2, -wallThickness / 2, width, wallThickness, wallOptions);
-    walls.leftWall = Matter.Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height, wallOptions);
-    walls.rightWall = Matter.Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height, wallOptions);
+    walls.ground = Matter.Bodies.rectangle(w / 2, h + wallThickness / 2, w, wallThickness, wallOptions);
+    walls.ceiling = Matter.Bodies.rectangle(w / 2, -wallThickness / 2, w, wallThickness, wallOptions);
+    walls.leftWall = Matter.Bodies.rectangle(-wallThickness / 2, h / 2, wallThickness, h, wallOptions);
+    walls.rightWall = Matter.Bodies.rectangle(w + wallThickness / 2, h / 2, wallThickness, h, wallOptions);
 
-    Matter.Composite.add(world, [walls.ground, walls.ceiling, walls.leftWall, walls.rightWall]);
+    Matter.Composite.add(engine.world, Object.values(walls) as Matter.Body[]);
   };
 
-  // Функция обновления позиций элементов
-  const updateItemPositions = (width) => {
-    const newPositions = getResponsivePositions(width);
-    
-    // Обновляем данные элементов
-    items.splice(0, items.length, ...newPositions);
-    
-    // Обновляем позиции физических тел
-    bodies.forEach((body, index) => {
-      if (newPositions[index]) {
-        Matter.Body.setPosition(body, {
-          x: newPositions[index].x,
-          y: newPositions[index].y
-        });
-        Matter.Body.setVelocity(body, { x: 0, y: 0 }); // Сбрасываем скорость
+  /**
+   * DYNAMIC RE-POSITIONING
+   * Teleports physical bodies to their responsive starting points without destroying the engine.
+   */
+  const updateItemPositions = (w: number) => {
+    const newPos = getResponsivePositions(w);
+    items.splice(0, items.length, ...newPos);
+
+    bodies.forEach((body, i) => {
+      if (newPos[i]) {
+        Matter.Body.setPosition(body, { x: newPos[i].x, y: newPos[i].y });
+        Matter.Body.setVelocity(body, { x: 0, y: 0 });
       }
     });
   };
 
-  // Функция обработки изменения размера
-  const handleResize = () => {
-    const container = sceneContainer.value;
-    const newWidth = container.clientWidth;
-    const newHeight = container.clientHeight;
-    
-    // Обновляем границы
-    updateWalls(newWidth, newHeight);
-    
-    // Обновляем позиции элементов
-    updateItemPositions(newWidth);
-  };
-
-  // 2. Создание невидимых физических границ (стен)
+  // Initial boundary setup
   updateWalls(width, height);
 
-  // 3. Создание физических тел на основе реальных размеров DOM-элементов
+  /**
+   * BODY GENERATION
+   * Converts HTML DOM dimensions into physical Matter.js entities.
+   * We use getBoundingClientRect to ensure the physics engine matches the visual scale exactly.
+   */
   bodies = items.map((item, index) => {
-    const el = itemRefs.value[index];
-    const rect = el.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
+    const rect = itemRefs.value[index].getBoundingClientRect();
+    const options = { restitution: 0.3, friction: 0.7, density: 0.002 };
 
-    let body;
-    if (item.class === 'circle') {
-      body = Matter.Bodies.circle(item.x, item.y, w / 2, {
-        restitution: 0.3, // Уменьшил отскок
-        friction: 0.7,    // Увеличил трение
-        density: 0.002,   // Плотность
-      });
-    } else {
-      body = Matter.Bodies.rectangle(item.x, item.y, w, h, {
-        restitution: 0.3, // Уменьшил отскок
-        friction: 0.7,    // Увеличил трение
-        density: 0.002,   // Плотность
-      });
-    }
-
-    return body;
+    return item.class === 'circle'
+        ? Matter.Bodies.circle(item.x, item.y, rect.width / 2, options)
+        : Matter.Bodies.rectangle(item.x, item.y, rect.width, rect.height, options);
   });
 
-  Matter.Composite.add(world, bodies);
+  Matter.Composite.add(engine.world, bodies);
 
-  // 4. Настройка управления (мышь и тачбар)
+  // --- INTERACTION SETUP ---
   const mouse = Matter.Mouse.create(container);
   const mouseConstraint = Matter.MouseConstraint.create(engine, {
     mouse: mouse,
-    constraint: {
-      stiffness: 0.1,
-      render: { visible: false }
-    }
+    constraint: { stiffness: 0.1, render: { visible: false } }
   });
 
-  Matter.Composite.add(world, mouseConstraint);
+  Matter.Composite.add(engine.world, mouseConstraint);
 
-  // ==========================================
-  // НАСТРОЙКА СВОБОДНОГО СКРОЛЛА СТРАНИЦЫ
-  // ==========================================
+  /**
+   * SCROLL UX OVERRIDE
+   * Matter.js hijacks all input by default.
+   * We manually restore native scrolling for better User Experience.
+   */
 
-  // А. Разрешаем прокрутку колесиком мыши на десктопе
+  // A. Desktop: Restore mouse wheel for page scrolling
   if (mouse.element) {
-    mouse.element.removeEventListener("wheel", mouseConstraint.mouse.mousewheel);
-    mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+    mouse.element.removeEventListener("wheel", (mouseConstraint.mouse as any).mousewheel);
+    mouse.element.removeEventListener("mousewheel", (mouseConstraint.mouse as any).mousewheel);
   }
 
-  // Б. Базовая разблокировка тач-активности в контейнере
-  container.style.touchAction = 'manipulation';
-
-  // В. Умный мобильный скролл при перетаскивании плашек
-  container.addEventListener('touchstart', (event) => {
-    const touch = event.touches[0];
-
-    // Получаем координаты касания относительно контейнера физики
+  // B. Mobile: Context-aware touch behavior
+  container.addEventListener('touchstart', (e) => {
     const rect = container.getBoundingClientRect();
-    const touchX = touch.clientX - rect.left;
-    const touchY = touch.clientY - rect.top;
-    const touchPosition = { x: touchX, y: touchY };
+    const touch = { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
 
-    // Проверяем, попал ли палец на какую-нибудь плашку
-    const clickedBody = Matter.Query.point(bodies, touchPosition)[0];
-
-    if (clickedBody) {
-      // Если схватили плашку — отключаем скролл страницы, чтобы её тащить
-      container.style.touchAction = 'none';
-    } else {
-      // Если коснулись пустого места — разрешаем вертикальный скролл страницы пальцем
-      container.style.touchAction = 'pan-y';
-    }
+    // Disable scroll ONLY if the user is grabbing a physical object
+    const isGrabbingBody = Matter.Query.point(bodies, touch).length > 0;
+    container.style.touchAction = isGrabbingBody ? 'none' : 'pan-y';
   }, { passive: false });
 
-  container.addEventListener('touchend', () => {
-    // Возвращаем дефолтный режим после того, как палец убрали
-    container.style.touchAction = 'manipulation';
-  });
-
-  // ==========================================
-
-  // 5. Синхронизация физики с Vue-состоянием на каждом кадре
+  /**
+   * TICK EVENT
+   * The core loop: transfers Matter.js calculations back into Vue's reactive state.
+   */
   Matter.Events.on(engine, 'afterUpdate', () => {
-    bodies.forEach((body, index) => {
-      bodiesCoords[index] = {
-        x: body.position.x,
-        y: body.position.y,
-        angle: body.angle
-      };
+    bodies.forEach((body, i) => {
+      bodiesCoords[i] = { x: body.position.x, y: body.position.y, angle: body.angle };
     });
   });
 
-  // 6. Запуск физического мира
+  // --- LIFECYCLE START ---
   runner = Matter.Runner.create();
   Matter.Runner.run(runner, engine);
 
-  // 7. Добавляем ResizeObserver для отслеживания изменений размера контейнера
-  resizeObserver = new ResizeObserver(handleResize);
+  resizeObserver = new ResizeObserver(() => {
+    updateWalls(container.clientWidth, container.clientHeight);
+    updateItemPositions(container.clientWidth);
+  });
   resizeObserver.observe(container);
 });
 
 onUnmounted(() => {
-  if (runner) Matter.Runner.stop(runner);
-  if (engine) Matter.Engine.clear(engine);
-  if (resizeObserver) resizeObserver.disconnect();
+  Matter.Runner.stop(runner);
+  Matter.Engine.clear(engine);
+  resizeObserver?.disconnect();
 });
 </script>
 

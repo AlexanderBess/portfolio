@@ -1,5 +1,5 @@
 <template>
-  <section class="experiences">
+  <section id="experience" class="experiences">
     <div class="experiences__sidebar">
       <h2 class="experiences__title">{{ t("projects.experiences") }}</h2>
     </div>

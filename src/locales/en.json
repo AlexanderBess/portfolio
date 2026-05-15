@@ -3,9 +3,8 @@
     "name": "MARYA©",
     "nav": {
       "home": "HOME",
-      "about": "WORKS",
-      "projects": "ARCHIVE",
-      "contact": "Contact"
+      "experience": "EXPERIENCE",
+      "contact": "CONTACT"
     }
   },
   "hero": {
@@ -16,8 +15,8 @@
   },
   "about": {
     "title": "About Me",
-    "description": "Hi, I’m Alexander, a frontend developer focused on building clean, scalable, and user-friendly web experiences.",
-    "passion": "Specialized in Vue.js, TypeScript, real-time applications, UI architecture, and modern frontend development.",
+    "description": "Hi, I’m Alexander, a Frontend Engineer dedicated to crafting clean, scalable, and high-performance web systems.",
+    "passion": "Specialized in Vue.js, TypeScript, and complex UI architecture. I build real-time applications where every pixel and every line of code serves a purpose.",
     "experience": "Work Experience",
     "projectsCount": "Projects",
     "skills": "Technical Skills",
@@ -43,20 +42,9 @@
   },
   "contact": {
     "title": "Contact",
-    "subtitle": "I'm always open to new opportunities and interesting projects. Get in touch!",
-    "letsConnect": "Let's Connect",
-    "email": "Email",
-    "phone": "Phone",
-    "location": "Location",
-    "social": "Social Networks",
-    "sendMessage": "Send Message",
-    "name": "Name",
-    "emailPlaceholder": "your@email.com",
-    "message": "Message",
-    "messagePlaceholder": "Your message...",
-    "sending": "Sending...",
-    "sendSuccess": "Message sent successfully!",
-    "sendError": "Error sending message. Please try again."
+    "first_button": "YOU CAN",
+    "second_button": "WRITE",
+    "where_to_start": "OR"
   },
   "common": {
     "backToHome": "Back to Home"
