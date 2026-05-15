@@ -4,7 +4,7 @@
       <div
           v-for="(item, index) in items"
           :key="index"
-          :ref="el => { if (el) itemRefs[index] = el }"
+          :ref="(el) => { if (el) itemRefs[index] = el as HTMLElement }"
           class="physics-body"
           :class="item.class"
           :style="getStyles(index)"
@@ -43,7 +43,7 @@ const getResponsivePositions = (width: number) => {
 // --- STATE MANAGEMENT ---
 const items = reactive(getResponsivePositions(window.innerWidth));
 const sceneContainer = ref<HTMLElement | null>(null);
-const itemRefs = ref<HTMLElement[]>([]);
+const itemRefs = ref<(HTMLElement)[]>([]);
 
 /** * MIRROR STATE
  * Reactive bridge between Matter.js calculations and Vue's DOM updates.
@@ -130,13 +130,16 @@ onMounted(async () => {
    * We use getBoundingClientRect to ensure the physics engine matches the visual scale exactly.
    */
   bodies = items.map((item, index) => {
-    const rect = itemRefs.value[index].getBoundingClientRect();
+    const el = itemRefs.value[index];
+    if (!el) return null;
+
+    const rect = el.getBoundingClientRect();
     const options = { restitution: 0.3, friction: 0.7, density: 0.002 };
 
     return item.class === 'circle'
         ? Matter.Bodies.circle(item.x, item.y, rect.width / 2, options)
         : Matter.Bodies.rectangle(item.x, item.y, rect.width, rect.height, options);
-  });
+  }).filter(Boolean) as Matter.Body[];
 
   Matter.Composite.add(engine.world, bodies);
 

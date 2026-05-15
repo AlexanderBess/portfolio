@@ -4,7 +4,7 @@ import App from './App.vue'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import i18n from './i18n'
-import './styles/main.scss'
+import '@/styles/main.scss'
 
 const routes = [
   { path: '/', component: Home },
