@@ -77,9 +77,11 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .contact-morph {
-  padding: 100px 20px;
+  padding: 0 20px;
   display: flex;
+  height: 100vh;
   justify-content: center;
+  align-items: center;
   background: var(--bg-primary);
   overflow: hidden;
 
