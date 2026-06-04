@@ -1,5 +1,5 @@
 <template>
-  <section id="experience" ref="sectionRef" class="experiences">
+  <section id="experience" class="experiences">
     <div class="experiences__sidebar">
       <h2 class="experiences__title">{{ t("projects.experiences") }}</h2>
 
@@ -60,7 +60,6 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const activeCompanyIndex = ref<number>(-1);
-const sectionRef = ref<HTMLElement | null>(null);
 const cardRefs = ref<HTMLElement[]>([]);
 let observer: IntersectionObserver | null = null;
 
