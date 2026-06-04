@@ -293,7 +293,7 @@ onMounted(() => {
     }
 
     &--active {
-      background-color: var(--accent-primary);
+      background-color: var(--bg-secondary);
       color: var(--text-primary);
     }
   }
@@ -376,7 +376,7 @@ onMounted(() => {
     }
 
     &--active {
-      background-color: var(--accent-primary);
+      background-color: var(--bg-secondary);
       color: var(--text-primary);
     }
   }
