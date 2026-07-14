@@ -20,7 +20,6 @@ import ContactSection from '../components/bento/ContactSection.vue'
 .portfolio {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 </style>
 

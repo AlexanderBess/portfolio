@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-auto w-full max-w-6xl px-4 py-12 text-theme-text sm:px-6">
+  <section class="mx-auto w-full max-w-6xl px-4 pb-12 text-theme-text sm:px-6">
     <BentoGrid>
       <!-- ═══ Hero ═══ -->
       <BentoCard v-reveal :col-span="2" :row-span="2" glow-color="rgba(0, 242, 254, 0.12)">
