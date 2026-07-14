@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Anthropic from '@anthropic-ai/sdk';
-import { buildSystemPrompt } from '@/server/aiTwinPrompt';
+// NOTE: keep this import RELATIVE. The `@` alias is a Vite (frontend) alias;
+// Vercel bundles /api functions separately and cannot resolve it.
+import { buildSystemPrompt } from '../src/server/aiTwinPrompt';
 
 /**
  * AI Twin backend — Vercel serverless function.

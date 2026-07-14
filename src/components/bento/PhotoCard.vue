@@ -11,7 +11,7 @@
       Replace public/portrait.jpg with a real photo (3:4, ~900×1200).
     -->
     <img
-      src="/src/assets/images/PNG/me.png"
+      :src="portraitUrl"
       :alt="personalInfo.name"
       width="1000"
       height="1200"
@@ -35,6 +35,9 @@
 import { onBeforeUnmount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { portfolioData } from '@/data/portfolioData'
+// Imported (not a raw /src/... string) so Vite bundles and hashes the asset —
+// raw /src paths only work in dev and 404 in production builds
+import portraitUrl from '@/assets/images/PNG/me.png'
 
 /**
  * Portrait bento card with a 3D tilt + glare that follows the cursor.

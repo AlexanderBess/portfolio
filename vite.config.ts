@@ -4,6 +4,14 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Dart Sass modern API — silences the legacy-js-api deprecation warning
+        api: 'modern',
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
