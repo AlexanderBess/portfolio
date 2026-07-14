@@ -164,11 +164,7 @@ watch([() => messages.value.length, isTyping, isLoadingHistory], scrollToBottom)
 </script>
 
 <style scoped>
-/*
- * Opaque, theme-aware background set directly on the CSS var — deliberately
- * not a Tailwind utility, so the overlay never turns transparent because of
- * config/JIT issues.
- */
+/* Opaque background set via CSS var on purpose — a Tailwind utility could silently drop out (config/JIT) and leave the window transparent */
 .chat-window {
   background-color: var(--card-bg);
 }

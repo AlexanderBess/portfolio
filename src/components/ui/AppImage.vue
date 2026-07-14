@@ -21,22 +21,11 @@
 import { computed, ref } from 'vue'
 
 /**
- * AppImage — performance-first image helper.
- *
- * - `<picture>` with AVIF → WebP → original fallback (best format wins)
- * - native lazy loading + async decode; `eager` prop for above-the-fold
- *   images (hero/LCP) — those get fetchpriority="high" instead
- * - `width`/`height` are REQUIRED: the browser reserves space and the
- *   layout never shifts (CLS = 0)
- * - soft fade-in when the image arrives
- *
+ * Performance-first image helper: <picture> AVIF → WebP → original; required width/height keep CLS at 0.
  * Usage:
  *   <AppImage src="/photos/trip.jpg" alt="Fog over the mountains" :width="800" :height="600" />
- *
- * Next to `trip.jpg` place `trip.avif` and `trip.webp` — the component picks
- * them up automatically (same path, different extension). One-off conversion:
- *   npx @squoosh/cli --avif auto --webp auto "src/assets/images/PNG/*.png"
- * or add `vite-imagetools` for build-time generation.
+ * Sibling .avif/.webp files (same path, different extension) are picked up automatically. Convert with
+ *   npx @squoosh/cli --avif auto --webp auto "src/assets/images/PNG/*.png" — or vite-imagetools at build time.
  */
 
 interface Props {

@@ -24,8 +24,7 @@ export default {
           subtle: 'rgba(255, 255, 255, 0.05)',
           hover: 'rgba(255, 255, 255, 0.12)',
         },
-        // Semantic, theme-aware tokens — resolve to CSS vars that flip with
-        // [data-theme]. Use these in all new blocks so themes "just work".
+        // Semantic theme tokens — resolve to CSS vars that flip with [data-theme]
         theme: {
           bg: 'var(--bg-primary)',
           surface: 'var(--bg-surface)',

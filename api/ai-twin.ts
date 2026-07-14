@@ -5,18 +5,9 @@ import Anthropic from '@anthropic-ai/sdk';
 import { buildSystemPrompt } from '../src/server/aiTwinPrompt';
 
 /**
- * AI Twin backend — Vercel serverless function.
- *
- * Request:  POST { messages: [{ role: 'user' | 'assistant', content: string }], locale?: string }
- * Response: 200 { reply: string } | 429 { error: 'rate_limited' } | 4xx/5xx { error: string }
- *
- * Free-tier protection (three layers):
- * 1. Hard caps per request: history and message length are trimmed, small
- *    max_tokens, cheapest model (Haiku).
- * 2. Per-IP rate limit: 8 requests/minute and 40/day. Uses Upstash Redis
- *    (fixed windows) when UPSTASH_REDIS_REST_URL/TOKEN are set — survives
- *    cold starts; otherwise falls back to in-memory (per warm instance).
- * 3. Same-origin check to keep other sites from embedding the endpoint.
+ * AI Twin backend — Vercel function. POST { messages, locale? } → 200 { reply } | 429 { error: 'rate_limited' }.
+ * Free-tier protection: hard per-request caps (trimmed history/length, small max_tokens, Haiku),
+ * per-IP limits (8/min, 40/day) via Upstash fixed windows or in-memory fallback, same-origin check.
  */
 
 // --- Caps ----------------------------------------------------------------------

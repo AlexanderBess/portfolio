@@ -12,23 +12,9 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 
 /**
- * InteractiveGridBg — "engineering canvas" background.
- *
- * Rendering: a fixed, non-interactive layer (z-index: -1, pointer-events:
- * none) with a CSS-only grid pattern and a radial "flashlight" that follows
- * the pointer. Colors come from the theme tokens in main.scss
- * (--canvas-bg / --canvas-grid-line / --canvas-spotlight), so dark/light
- * switching is free.
- *
- * Performance:
- * - coordinates are written as CSS vars (--mouse-x/--mouse-y) on the root
- *   element only, strictly inside requestAnimationFrame — one style write
- *   per frame, no layout thrashing;
- * - no `filter: blur()` — softness comes from the radial gradient falloff,
- *   which mobile GPUs handle trivially;
- * - touch devices: the light glides to the tap/drag point (touchstart /
- *   touchmove) and fades out on touchend;
- * - prefers-reduced-motion: no listeners at all — a static, dim glow.
+ * "Engineering canvas" background: CSS-only grid + pointer spotlight, themed via --canvas-* tokens in main.scss.
+ * CSS-var coordinate writes happen only inside requestAnimationFrame (one style write per frame);
+ * no filter:blur by design (radial falloff is cheap on mobile GPUs); on touch the light fades out on touchend.
  */
 
 const rootRef = ref<HTMLDivElement | null>(null)

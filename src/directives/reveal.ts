@@ -1,18 +1,10 @@
 import type { Directive } from 'vue';
 
 /**
- * v-reveal — staggered reveal-on-scroll.
- *
- * Usage:
+ * v-reveal — staggered reveal-on-scroll. Usage:
  *   <div v-reveal />          — reveals with no delay
  *   <div v-reveal="120" />    — reveals with a 120ms stagger delay
- *
- * Implementation notes:
- * - one shared IntersectionObserver for all elements (created lazily)
- * - initial hidden state comes from the global `[data-reveal]` styles
- * - after the transition finishes, the attribute and classes are removed,
- *   so element styles (e.g. Tailwind `transition-colors`) fully revert
- * - respects prefers-reduced-motion: elements are simply left visible
+ * After the transition, the attribute and classes are removed so element transitions (e.g. Tailwind `transition-colors`) fully revert.
  */
 
 const REVEAL_DURATION_MS = 700;

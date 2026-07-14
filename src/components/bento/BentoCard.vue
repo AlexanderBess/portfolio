@@ -77,8 +77,7 @@ function onMouseMove(event: MouseEvent): void {
 }
 
 .bento-card__glow {
-  /* Fallback to --glow-default keeps the gradient valid even if the
-     v-bind()-injected variable is momentarily missing (dev/HMR desync) */
+  /* --glow-default fallback keeps the gradient valid if the v-bind() variable is momentarily missing (dev/HMR desync) */
   background: radial-gradient(
     420px circle at var(--glow-x, 50%) var(--glow-y, 50%),
     var(--glow-color, var(--glow-default)),

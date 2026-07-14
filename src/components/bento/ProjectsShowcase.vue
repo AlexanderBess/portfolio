@@ -8,14 +8,9 @@
       <h2 id="projects-title" class="text-2xl font-bold sm:text-3xl">{{ t('bento.projects.title') }}</h2>
     </div>
 
-    <!--
-      Native scroll-snap carousel: touch swipe on mobile, drag-to-scroll with
-      the mouse, floating edge arrows + clickable dots. No libraries.
-    -->
+    <!-- Native scroll-snap carousel, no libraries -->
     <div class="relative">
-      <!-- Edge fades: hint that there is more content -->
-      <!-- Positioned at the track's real edges: the track bleeds past this
-           wrapper by the section padding (-mx-4 / sm:-mx-6) -->
+      <!-- Fades sit at the track's real edges — the track bleeds past this wrapper by -mx-4 / sm:-mx-6 -->
       <div
         v-show="canScrollPrev"
         class="carousel-fade carousel-fade--left pointer-events-none absolute inset-y-0 -left-4 z-10 w-10 sm:-left-6 sm:w-12"
@@ -131,7 +126,7 @@
       </div>
     </div>
 
-    <!-- Dots pagination: active dot stretches into a pill, all are clickable -->
+    <!-- Dots pagination -->
     <div class="mt-5 flex justify-center gap-2">
       <button
         v-for="index in slideCount"
@@ -273,12 +268,10 @@ onBeforeUnmount(() => resizeObserver?.disconnect())
   display: none;
 }
 
-/* Floating arrows: opaque, theme-aware */
 .carousel-arrow {
   background-color: var(--card-bg);
 }
 
-/* Edge fades hint at overflow in the scroll direction */
 .carousel-fade--left {
   background: linear-gradient(to right, var(--bg-primary), transparent);
 }

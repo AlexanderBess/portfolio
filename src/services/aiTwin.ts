@@ -1,17 +1,9 @@
 import i18n from '@/i18n';
 
 /**
- * AI Twin chat service.
- *
- * Provider architecture:
- * - `mockProvider` (default) — pure client-side: intent matching over the
- *   user's text + localized canned answers, with simulated network latency.
- * - `httpProvider` — real backend. Enabled by setting VITE_AI_TWIN_ENDPOINT
- *   (e.g. `/api/ai-twin` for a Vercel serverless function). The endpoint
- *   receives `{ messages, locale }` and must respond `{ reply: string }`.
- *
- * The UI depends only on the `AiTwinProvider` interface, so swapping the
- * mock for a real LLM backend requires zero component changes.
+ * AI Twin chat service: client-side mock provider by default, HTTP provider
+ * when VITE_AI_TWIN_ENDPOINT is set (e.g. `/api/ai-twin`).
+ * Endpoint contract: POST `{ messages, locale }` → `{ reply: string }`.
  */
 
 export type ChatRole = 'user' | 'assistant';

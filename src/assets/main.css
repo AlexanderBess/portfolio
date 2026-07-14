@@ -1,16 +1,11 @@
-/* @import must be the very first rule in the file — anywhere later it is
-   silently ignored by browsers (the font simply doesn't load) */
+/* @import must stay the very first rule — browsers silently ignore it anywhere later (font wouldn't load) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/*
- * Preflight is ON: components rely on its resets (no link underlines, no
- * list markers, collapsed default margins). The legacy SCSS sections that
- * once conflicted with it have been removed.
- */
+/* Preflight is ON — components rely on its resets (no link underlines/list markers, collapsed default margins) */
 
 html {
   scroll-behavior: smooth;

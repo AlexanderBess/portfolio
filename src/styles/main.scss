@@ -66,17 +66,14 @@
   padding: 0;
 }
 
-// Accessible keyboard focus: visible ring on any focusable element,
-// only for keyboard navigation (:focus-visible), never for mouse clicks.
+// Keyboard-only focus ring (:focus-visible never triggers on mouse clicks)
 :focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-// v-reveal directive (src/directives/reveal.ts): staggered reveal-on-scroll.
-// The attribute is removed after the transition, so these rules never
-// linger over component styles.
+// v-reveal directive styles — the data-reveal attribute is removed after the transition, so these rules never linger over component styles
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal] {
     opacity: 0;

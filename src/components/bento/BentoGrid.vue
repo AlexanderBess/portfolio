@@ -5,6 +5,5 @@
 </template>
 
 <script setup lang="ts">
-// Layout-only wrapper: 1 column on mobile, 2 on tablet, 4-column mosaic on desktop.
-// Cards control their own spans via BentoCard props.
+// Layout-only wrapper; cards control their own spans via BentoCard props.
 </script>

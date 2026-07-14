@@ -30,7 +30,6 @@
 
         <BentoCard>
           <header class="mb-4">
-            <!-- Company + role: stacked on mobile, inline from sm -->
             <div class="flex flex-col gap-0.5 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-3">
               <h3 class="text-lg font-semibold leading-tight">
                 {{ job.company }}
@@ -40,7 +39,6 @@
               </span>
             </div>
 
-            <!-- Meta row: period + location -->
             <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-theme-muted">
               <span class="flex items-center gap-1.5">
                 <CalendarDays class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
@@ -88,10 +86,7 @@ import { portfolioData, type JobId } from '@/data/portfolioData'
 const { t, tm, rt } = useI18n()
 const { experience } = portfolioData
 
-/**
- * vue-i18n stores array messages as compiled ASTs — `tm` retrieves the array,
- * `rt` renders each item back to a plain string.
- */
+/** vue-i18n stores array messages as compiled ASTs — `tm` retrieves the array, `rt` renders each item to a string. */
 function achievementsOf(id: JobId): string[] {
   const messages = tm(`bento.experience.jobs.${id}.achievements`) as unknown[]
   return messages.map((message) => rt(message as Parameters<typeof rt>[0]))
@@ -99,14 +94,8 @@ function achievementsOf(id: JobId): string[] {
 </script>
 
 <style scoped>
-/*
- * Timeline segment: each item (except the last) draws a line from its own
- * dot down to the next item's dot:
- *   top: 2rem            — the dot's top-8 offset
- *   bottom: -3.5rem      — space-y-6 gap (1.5rem) + next dot's offset (2rem)
- * Segments join seamlessly, so the line starts at the first dot
- * and ends exactly at the last one.
- */
+/* Timeline segment: each item (except the last) draws a line from its dot to the next item's dot.
+   top: 2rem — the dot's top-8 offset; bottom: -3.5rem — space-y-6 gap (1.5rem) + next dot's offset (2rem). */
 .timeline-item:not(:last-child)::before {
   content: '';
   position: absolute;

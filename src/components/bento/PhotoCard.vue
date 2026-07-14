@@ -5,11 +5,7 @@
     @mousemove="onMouseMove"
     @mouseleave="onMouseLeave"
   >
-    <!--
-      Above-the-fold portrait → eager + high priority (it's an LCP candidate,
-      lazy loading would hurt here). For below-the-fold photos use <AppImage>.
-      Replace public/portrait.jpg with a real photo (3:4, ~900×1200).
-    -->
+    <!-- Above the fold → eager + high priority (LCP candidate) -->
     <img
       :src="portraitUrl"
       :alt="personalInfo.name"
@@ -20,7 +16,6 @@
       class="aspect-[3/4] h-full w-full object-cover object-top lg:aspect-auto"
     />
 
-    <!-- Moving glare -->
     <div class="photo-card__glare pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
   </div>
 </template>
@@ -28,15 +23,10 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
 import { portfolioData } from '@/data/portfolioData'
-// Imported (not a raw /src/... string) so Vite bundles and hashes the asset —
-// raw /src paths only work in dev and 404 in production builds
+// Imported so Vite bundles and hashes the asset — raw /src paths only work in dev and 404 in production
 import portraitUrl from '@/assets/images/PNG/me.png'
 
-/**
- * Portrait bento card with a 3D tilt + glare that follows the cursor.
- * Pairs with the glow effect of the other cards. Tilt is skipped for
- * prefers-reduced-motion users; a rAF guard keeps mousemove cheap.
- */
+/** Portrait card with cursor-following 3D tilt + glare; tilt is skipped for prefers-reduced-motion. */
 
 const { personalInfo } = portfolioData
 
@@ -55,7 +45,7 @@ function onMouseMove(event: MouseEvent): void {
   cancelAnimationFrame(rafId)
   rafId = requestAnimationFrame(() => {
     const rect = card.getBoundingClientRect()
-    const px = (event.clientX - rect.left) / rect.width // 0..1
+    const px = (event.clientX - rect.left) / rect.width
     const py = (event.clientY - rect.top) / rect.height
 
     card.style.setProperty('--tilt-x', `${(py - 0.5) * -2 * MAX_TILT_DEG}deg`)

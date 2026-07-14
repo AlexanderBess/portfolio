@@ -2,12 +2,8 @@ import { portfolioData } from '../data/portfolioData';
 import en from '../locales/en.json';
 
 /**
- * Builds the system prompt for the AI twin from the single sources of truth:
- * structural data from `portfolioData` + human-readable texts from the EN
- * locale (roles, periods, achievements, project and interest descriptions).
- *
- * NOTE: uses relative imports only — this module is consumed by the Vercel
- * serverless function in /api, which doesn't know Vite's `@` alias.
+ * Builds the AI twin system prompt from `portfolioData` + EN locale texts.
+ * NOTE: relative imports only — this module is bundled by the Vercel function in /api, which doesn't know Vite's `@` alias.
  */
 
 const bento = en.bento;

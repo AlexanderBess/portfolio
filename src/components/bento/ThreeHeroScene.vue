@@ -7,14 +7,8 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import * as THREE from 'three'
 
 /**
- * Decorative 3D scene for the hero card: a slowly rotating wireframe
- * icosahedron with a particle shell and mouse parallax.
- *
- * Engineering notes:
- * - colors follow the active theme (reads CSS vars, reacts to [data-theme] flips)
- * - rAF pauses when the scene is offscreen (IntersectionObserver)
- * - respects prefers-reduced-motion (static frame, no idle spin)
- * - DPR capped at 2, full dispose on unmount
+ * Decorative hero scene: rotating wireframe icosahedron + particle shell with mouse parallax.
+ * rAF pauses while offscreen; prefers-reduced-motion gets a static frame; colors react to [data-theme] flips.
  */
 
 interface Props {
@@ -125,7 +119,6 @@ onMounted(() => {
 
   scene.add(mesh, points)
 
-  // Keep canvas in sync with the card size
   resizeObserver = new ResizeObserver(([entry]) => {
     if (!renderer || !camera) return
     const { width: w, height: h } = entry.contentRect
@@ -144,7 +137,6 @@ onMounted(() => {
   })
   intersectionObserver.observe(container)
 
-  // React to theme switches
   themeObserver = new MutationObserver(applyThemeColors)
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
 

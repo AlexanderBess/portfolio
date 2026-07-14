@@ -4,11 +4,7 @@ import { aiTwinService, AiTwinRateLimitError, type ChatMessage } from '@/service
 
 let messageId = 0;
 
-/**
- * Chat state for the AI Twin widget: message history, typing state and the
- * initial "history loading" skeleton phase. All backend communication goes
- * through `aiTwinService` — this composable knows nothing about transports.
- */
+/** Chat state for the AI Twin widget; transport-agnostic — all backend I/O goes through `aiTwinService`. */
 export function useAiTwinChat() {
   const { t } = useI18n();
 

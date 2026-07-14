@@ -16,13 +16,11 @@ import InteractiveGridBg from './components/InteractiveGridBg.vue'
 </script>
 
 <style scoped lang="scss">
-// Import variables
 @use './styles/variables' as *;
 
 .portfolio {
   min-height: 100vh;
-  // Background is painted by InteractiveGridBg (fixed, z-index: -1);
-  // an opaque background here would cover it.
+  // Must stay transparent — the background is painted by InteractiveGridBg (fixed, z-index: -1) behind it
   background: transparent;
   transition: var(--theme-transition);
 }
