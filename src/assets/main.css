@@ -7,19 +7,10 @@
 @tailwind utilities;
 
 /*
- * Preflight is disabled (see tailwind.config.js), so we restore the one
- * piece Tailwind's border utilities rely on: a default border-style.
- * The universal selector has zero specificity — existing SCSS rules win.
+ * Preflight is ON: components rely on its resets (no link underlines, no
+ * list markers, collapsed default margins). The legacy SCSS sections that
+ * once conflicted with it have been removed.
  */
-@layer base {
-  *,
-  ::before,
-  ::after {
-    border-style: solid;
-    border-width: 0;
-    border-color: rgba(255, 255, 255, 0.05);
-  }
-}
 
 html {
   scroll-behavior: smooth;

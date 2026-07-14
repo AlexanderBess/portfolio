@@ -4,11 +4,6 @@ export default {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
-  // Preflight (global reset) is off: the existing sections are styled with
-  // plain SCSS and a global reset would break them. Utilities still work.
-  corePlugins: {
-    preflight: false,
-  },
   // Sync Tailwind's dark: variant with the existing data-theme mechanism
   darkMode: ['class', '[data-theme="dark"]'],
   theme: {
