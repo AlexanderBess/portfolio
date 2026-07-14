@@ -24,6 +24,11 @@
   --chip-bg: rgba(0, 0, 0, 0.04);
   --glow-default: rgba(37, 99, 235, 0.08);
 
+  // Engineering-canvas background (light)
+  --canvas-bg: #f9fafb;
+  --canvas-grid-line: rgba(0, 0, 0, 0.04);
+  --canvas-spotlight: rgba(37, 99, 235, 0.07);
+
   // Transition duration for theme changes
   --theme-transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -47,6 +52,11 @@
   --card-border-hover: rgba(255, 255, 255, 0.12);
   --chip-bg: rgba(255, 255, 255, 0.03);
   --glow-default: rgba(59, 130, 246, 0.14);
+
+  // Engineering-canvas background (dark)
+  --canvas-bg: #08080a;
+  --canvas-grid-line: rgba(255, 255, 255, 0.03);
+  --canvas-spotlight: rgba(0, 242, 254, 0.12);
 }
 
 // Global styles

@@ -210,7 +210,8 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: 40vh; /* Увеличил высоту контейнера */
-  background-color: var(--bg-primary);
+  /* Transparent: the page-wide InteractiveGridBg canvas shows through */
+  background-color: transparent;
   overflow: hidden;
   user-select: none;
   transition: var(--theme-transition);
@@ -239,7 +240,8 @@ onUnmounted(() => {
 .pill {
   padding: 10px 20px;
   border: 1px solid var(--text-primary);
-  background-color: var(--bg-primary);
+  /* Matches the canvas background so pills look "punched out" of the grid */
+  background-color: var(--canvas-bg);
   border-radius: 12px;
   color: var(--text-primary);
   font-family: 'Space Mono', monospace;
@@ -254,7 +256,7 @@ onUnmounted(() => {
   height: 80px;
   background-color: var(--text-primary);
   border-radius: 50%;
-  color: var(--bg-primary);
+  color: var(--canvas-bg);
   font-size: 24px;
   font-weight: bold;
 }
