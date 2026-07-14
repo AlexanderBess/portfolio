@@ -16,7 +16,14 @@
   --accent-primary: #{theme-color(accent-primary)};
   --sun-color: #{theme-color(sun-color-light)};
   --moon-color: #{theme-color(moon-color-light)};
-  
+
+  // Bento / card tokens (light)
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --card-border-hover: rgba(0, 0, 0, 0.14);
+  --chip-bg: rgba(0, 0, 0, 0.04);
+  --glow-default: rgba(37, 99, 235, 0.08);
+
   // Transition duration for theme changes
   --theme-transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -33,6 +40,13 @@
   --accent-primary: #{theme-color(accent-primary)};
   --sun-color: #{theme-color(sun-color)};
   --moon-color: #{theme-color(moon-color)};
+
+  // Bento / card tokens (dark)
+  --card-bg: #111116;
+  --card-border: rgba(255, 255, 255, 0.05);
+  --card-border-hover: rgba(255, 255, 255, 0.12);
+  --chip-bg: rgba(255, 255, 255, 0.03);
+  --glow-default: rgba(59, 130, 246, 0.14);
 }
 
 // Global styles
@@ -40,6 +54,33 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+// Accessible keyboard focus: visible ring on any focusable element,
+// only for keyboard navigation (:focus-visible), never for mouse clicks.
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+// v-reveal directive (src/directives/reveal.ts): staggered reveal-on-scroll.
+// The attribute is removed after the transition, so these rules never
+// linger over component styles.
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 html {

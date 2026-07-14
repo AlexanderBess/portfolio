@@ -1,21 +1,19 @@
 <template>
   <div class="portfolio">
     <PhysicBlock />
-    <Hero />
-    <About />
-    <Skills />
-    <Projects />
-    <Contact />
+    <BentoShowcase />
+    <ExperienceTimeline />
+    <ProjectsShowcase />
+    <ContactSection />
   </div>
 </template>
 
 <script setup lang="ts">
 import PhysicBlock from '../components/PhysicBlock.vue'
-import Hero from '../components/Hero.vue'
-import About from '../components/About.vue'
-import Projects from '../components/Projects.vue'
-import Contact from '../components/Contact.vue'
-import Skills from "@/components/Skills.vue";
+import BentoShowcase from '../components/bento/BentoShowcase.vue'
+import ExperienceTimeline from '../components/bento/ExperienceTimeline.vue'
+import ProjectsShowcase from '../components/bento/ProjectsShowcase.vue'
+import ContactSection from '../components/bento/ContactSection.vue'
 </script>
 
 <style lang="scss" scoped>

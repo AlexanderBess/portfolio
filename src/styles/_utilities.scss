@@ -182,7 +182,9 @@
 .transition-fast { @include transition(all, fast); }
 .transition-normal { @include transition(all, normal); }
 .transition-slow { @include transition(all, slow); }
-.transition-colors { @include transition(color, normal); }
+// NOTE: .transition-colors removed — it collided with Tailwind's utility of
+// the same name (color-only, 0.4s vs Tailwind's color+bg+border, 150ms) and
+// overrode hover transitions across the bento/chat components.
 .transition-background { @include transition(background-color, normal); }
 .transition-border { @include transition(border-color, normal); }
 
@@ -190,11 +192,9 @@
 .cursor-pointer { cursor: pointer; }
 .cursor-default { cursor: default; }
 
-// Visibility utilities
-.hidden { display: none; }
-.block { display: block; }
-.inline { display: inline; }
-.inline-block { display: inline-block; }
+// Visibility utilities: intentionally removed — they duplicated Tailwind's
+// .hidden/.block/.inline utilities and, being loaded after Tailwind,
+// overrode responsive variants like `sm:flex` (broke the carousel arrows).
 
 // Text utilities
 .text-center { text-align: center; }

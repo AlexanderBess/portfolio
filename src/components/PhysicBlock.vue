@@ -1,6 +1,8 @@
 <template>
   <section id="home">
-    <div ref="sceneContainer" class="physics-scene">
+    <!-- Decorative physics scene: hidden from screen readers, the real
+         h1/title lives in the hero bento card -->
+    <div ref="sceneContainer" class="physics-scene" aria-hidden="true">
       <div
           v-for="(item, index) in items"
           :key="index"
@@ -34,6 +36,7 @@ const getResponsivePositions = (width: number) => {
   return [
     { text: 'FRONTEND', class: 'pill', x: width * config.frontend, y: config.yBase },
     { text: 'DEVELOPER', class: 'pill', x: width * config.dev, y: config.yBase + 20 },
+    { text: 'ENGINEER', class: 'pill', x: width * config.dev, y: config.yBase + 20 },
     { text: 'VUE', class: 'pill', x: width * config.vue, y: config.yBase + 40 },
     { text: 'SASS', class: 'pill', hasDot: true, x: width * config.sass, y: config.yBase },
     { text: '★', class: 'circle', icon: '★', x: width * config.star, y: config.yBase + 10 }

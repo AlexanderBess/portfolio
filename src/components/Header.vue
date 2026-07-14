@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <nav class="header__nav">
+    <nav class="header__nav" :aria-label="t('header.a11y.mainNav')">
       <div class="header__container">
         <!-- Brand Name -->
         <div class="header__brand">
@@ -20,7 +20,9 @@
           <button
             @click="toggleTheme"
             class="header__theme-toggle"
-            :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+            :title="isDark ? t('header.a11y.lightMode') : t('header.a11y.darkMode')"
+            :aria-label="isDark ? t('header.a11y.lightMode') : t('header.a11y.darkMode')"
+            :aria-pressed="isDark"
           >
             <svg 
               class="header__theme-icon"
@@ -43,12 +45,18 @@
             <button
               @click="changeLanguage('en')"
               :class="['header__lang-btn', { 'header__lang-btn--active': locale === 'en' }]"
+              :aria-pressed="locale === 'en'"
+              aria-label="Switch to English"
+              lang="en"
             >
               EN
             </button>
             <button
               @click="changeLanguage('ru')"
               :class="['header__lang-btn', { 'header__lang-btn--active': locale === 'ru' }]"
+              :aria-pressed="locale === 'ru'"
+              aria-label="Переключить на русский"
+              lang="ru"
             >
               RU
             </button>
@@ -58,6 +66,9 @@
           <button
             @click="toggleMobileMenu"
             class="header__mobile-toggle"
+            :aria-label="isMobileMenuOpen ? t('header.a11y.closeMenu') : t('header.a11y.openMenu')"
+            :aria-expanded="isMobileMenuOpen"
+            aria-controls="mobile-menu"
           >
             <svg class="header__mobile-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -67,7 +78,7 @@
       </div>
 
       <!-- Mobile menu -->
-      <div v-if="isMobileMenuOpen" class="header__mobile-menu">
+      <div v-if="isMobileMenuOpen" id="mobile-menu" class="header__mobile-menu">
         <a href="#home" class="header__mobile-link">{{ t('header.nav.home') }}</a>
         <a href="#experience" class="header__mobile-link">{{ t('header.nav.experience') }}</a>
         <a href="#contact" class="header__mobile-link">{{ t('header.nav.contact') }}</a>
@@ -116,6 +127,7 @@ const toggleMobileMenu = () => {
 const changeLanguage = (lang: string) => {
   locale.value = lang
   localStorage.setItem('locale', lang)
+  document.documentElement.lang = lang // Keep <html lang> in sync for SR/SEO
   isMobileMenuOpen.value = false // Auto-close menu after selection
 }
 

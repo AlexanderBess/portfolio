@@ -5,45 +5,180 @@
       "home": "HOME",
       "experience": "EXPERIENCE",
       "contact": "CONTACT"
+    },
+    "a11y": {
+      "mainNav": "Main navigation",
+      "lightMode": "Switch to light theme",
+      "darkMode": "Switch to dark theme",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu"
     }
   },
-  "hero": {
-    "title": "ALEXANDER BES"
+  "bento": {
+    "hero": {
+      "badge": "{years}+ years of experience",
+      "title": "Senior Frontend Engineer",
+      "subtitle": "Expert in Vue.js, React.js, TypeScript & Robust Frontend Architecture"
+    },
+    "about": {
+      "title": "About Me",
+      "text": "Results-driven Senior Frontend Engineer with 6+ years of experience in designing, building, and scaling high-load web applications, enterprise dashboards, and Web3/P2P platforms. Expert in Vue.js (2/3), Nuxt.js, React.js, and Next.js, with a heavy focus on TypeScript and robust frontend architecture. Adept at accelerating development workflows using advanced AI-assisted tools (Claude, Gemini) for architecture validation and code analysis."
+    },
+    "skills": {
+      "frontend": "Frontend",
+      "architecture": "Architecture",
+      "toolsAndAI": "Tools & AI"
+    },
+    "interests": {
+      "photography": {
+        "name": "Photography",
+        "description": "I enjoy capturing moments and turning everyday scenes into visual stories. It helps me stay creative and notice details—a mindset that carries into my work as a developer."
+      },
+      "traveling": {
+        "name": "Traveling",
+        "description": "Traveling inspires me with new perspectives and cultures. Whether it's mountains or cities, I love exploring places that challenge my routine and spark curiosity."
+      },
+      "videoGames": {
+        "name": "Video Games",
+        "description": "A source of creative inspiration and relaxation. I especially enjoy story-driven games and immersive worlds that blend art, logic, and interaction."
+      }
+    },
+    "contact": {
+      "title": "Let's talk",
+      "text": "Open to interesting projects and collaboration.",
+      "cta": "Write me"
+    },
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "telegram": "Telegram"
+    },
+    "experience": {
+      "title": "Experience",
+      "jobs": {
+        "emcd": {
+          "role": "Frontend Engineer (Middle+ / Senior)",
+          "location": "Singapore (Remote)",
+          "period": "Feb 2024 — Present",
+          "achievements": [
+            "Migrated a core enterprise application from Vue 2 (Options API) to Vue 3 (Composition API) and TypeScript, reducing codebase size by 25%, improving type safety, and cutting feature time-to-market by 30%.",
+            "Designed and implemented core architecture for a high-load P2P cryptocurrency marketplace, leveraging WebSockets to achieve sub-100ms low-latency real-time data synchronization.",
+            "Engineered a scalable, enterprise-grade UI Component Library documented via Storybook and mapped 1:1 to the Figma design system, boosting cross-team development efficiency by 40%.",
+            "Configured and optimized Webpack/Vite build pipelines with code-splitting and lazy-loading, improving Google Web Vitals (LCP, FID) and accelerating initial page load time by 35%.",
+            "Integrated LLMs (Claude & Gemini) into the engineering workflow, accelerating complex refactoring, automated debugging, and architectural research while maintaining strict verification protocols.",
+            "Led peer code reviews and mentored junior/mid-level developers, establishing code quality standards and standardizing architectural patterns."
+          ]
+        },
+        "wsender": {
+          "role": "Contract Frontend Developer",
+          "location": "Novosibirsk, Russia",
+          "period": "Sep 2023 — Dec 2023",
+          "achievements": [
+            "Architected the foundational frontend boilerplate for a new SaaS product using Next.js, React, and TypeScript, establishing strict ESLint/Prettier configs.",
+            "Developed an interactive 3D product showcase using Three.js and custom scroll-driven animations, improving user engagement metrics by 45%.",
+            "Built pixel-perfect, highly responsive layouts with rich UI interactions based on complex Figma specifications."
+          ]
+        },
+        "anketolog": {
+          "role": "Contract Frontend Developer",
+          "location": "Novosibirsk, Russia",
+          "period": "Jul 2023 — Sep 2023",
+          "achievements": [
+            "Designed and structured the application logic for a high-load, data-heavy survey platform, using Nuxt.js for SSR and optimal SEO indexing.",
+            "Delivered 100% accessible (WCAG-compliant) UI layouts, integrating semantic HTML and ARIA attributes to expand audience reach."
+          ]
+        },
+        "tenzor": {
+          "role": "Frontend Developer (Middle)",
+          "location": "Novosibirsk, Russia",
+          "period": "Aug 2022 — Jun 2023",
+          "achievements": [
+            "Developed fault-tolerant, state-managed UI components using Vue 3 and Pinia, decreasing browser memory consumption by 20%.",
+            "Shipped scalable, modular UI solutions for complex enterprise ERP software, reducing tech debt and speeding up integration times by 15%."
+          ]
+        },
+        "crypton": {
+          "role": "Frontend Developer (Junior+ / Middle)",
+          "location": "Tomsk, Russia",
+          "period": "May 2021 — Jun 2022",
+          "achievements": [
+            "Built blockchain-integrated web interfaces (Web3) using React.js and TypeScript, creating secure frontend layers for smart contract interaction (Ethers.js/Web3.js).",
+            "Optimized dApp state management and error handling for failed transactions, improving successful checkout rates by 18%."
+          ]
+        },
+        "chrono": {
+          "role": "Full-Stack Developer (Junior)",
+          "location": "Novosibirsk, Russia",
+          "period": "Sep 2019 — May 2021",
+          "achievements": [
+            "Created advanced custom 3D animations (canvas-based 3D ring visualizer) and scroll-driven UI elements, elevating digital brand presence.",
+            "Integrated third-party logistics (DHL) and social APIs (VK) within the NetCat CMS framework, automating order tracking."
+          ]
+        }
+      }
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "visit": "Visit project",
+      "items": {
+        "p2pMarketplace": {
+          "name": "P2P Crypto Marketplace",
+          "description": "Core architecture of a high-load P2P cryptocurrency marketplace at emcd.io — WebSockets-driven real-time data sync with sub-100ms latency, built on Vue 3 and TypeScript."
+        },
+        "showcase3d": {
+          "name": "Interactive 3D Showcase",
+          "description": "Three.js product showcase with custom scroll-driven animations for the WSender SaaS — user engagement up 45%."
+        },
+        "uiKit": {
+          "name": "Enterprise UI Kit",
+          "description": "Scalable component library documented in Storybook and mapped 1:1 to the Figma design system — cross-team efficiency up 40%."
+        },
+        "surveyPlatform": {
+          "name": "High-load Survey Platform",
+          "description": "Data-heavy survey platform on Nuxt.js with SSR, SEO indexing and a fully WCAG-compliant accessible UI."
+        },
+        "terrainGenerator": {
+          "name": "Procedural Terrain Generator",
+          "description": "Interactive 3D landscape on Vue 3 + Three.js: fractional Brownian motion over Simplex noise, real-time terrain controls, four biome presets and dynamic day/night lighting with a wireframe tech aesthetic."
+        }
+      },
+      "github": {
+        "title": "More on GitHub",
+        "text": "Open-source experiments and pet projects live here.",
+        "cta": "Open GitHub"
+      },
+      "prev": "Previous project",
+      "next": "Next project",
+      "goTo": "Go to slide"
+    },
+    "contactSection": {
+      "title": "Let's build something great",
+      "text": "Open to interesting projects, collaborations and good conversations. The fastest ways to reach me:",
+      "telegram": "Write on Telegram",
+      "email": "Send an email"
+    }
   },
-  "about": {
-    "title": "About Me",
-    "description": "Hi, I’m Alexander, a Frontend Engineer dedicated to crafting clean, scalable, and high-performance web systems.",
-    "passion": "Specialized in Vue.js, TypeScript, and complex UI architecture. I build real-time applications where every pixel and every line of code serves a purpose.",
-    "experience": "Work Experience",
-    "projectsCount": "Projects",
-    "skills": "Technical Skills",
-    "img-text": "Yep, that's me"
-  },
-  "projects": {
-    "title": "My Projects",
-    "liveDemo": "Live Demo",
-    "github": "GitHub",
-    "experiences": "Experiences",
-    "visit_site": "Visit website",
-    "chrono_desc": "Engineered interactive interfaces featuring 3D graphics and complex animations. Integrated logistics (DHL) and social APIs to automate core business processes.",
-    "crypton_desc": "Developed Web3 interfaces for smart contract interaction. Delivered secure frontend solutions for blockchain ecosystems and p2p platforms.",
-    "tenzor_desc": "Architected and developed scalable UI components for enterprise-level software. Optimized frontend-to-database interactions for high-load systems.",
-    "anketolog_desc": "Designed the application architecture and logic for a comprehensive survey platform. Built adaptive survey builders with a focus on UX and high conversion rates.",
-    "wsender_desc": "Architected the project from the ground up and implemented core frontend logic. Developed complex business logic and interfaces for marketing automation services.",
-    "emcd_desc": "Led a full-scale ecosystem migration from Vue 2 to Vue 3 (Composition API). Developed P2P platforms, real-time WebSocket chats, and B2B dashboards with advanced analytics."
-  },
-  "skills": {
-    "communication": "Communication",
-    "hide": "Click to hide",
-    "show_details": "Click to open"
-  },
-  "contact": {
-    "title": "Contact",
-    "first_button": "YOU CAN",
-    "second_button": "WRITE",
-    "where_to_start": "OR"
-  },
-  "common": {
-    "backToHome": "Back to Home"
+  "aiTwin": {
+    "title": "Alex's AI Twin",
+    "subtitle": "Online — usually replies instantly",
+    "greeting": "Hi! I'm Alex's AI twin. Ask me about his skills, experience or hobbies — or use the quick questions below.",
+    "placeholder": "Ask me about Alex…",
+    "send": "Send",
+    "openChat": "Open AI twin chat",
+    "closeChat": "Close chat",
+    "typing": "Typing…",
+    "quick": {
+      "skills": "What are Alex's key Vue 3 skills?",
+      "emcd": "Tell me about his experience at emcd.io",
+      "hobby": "What are his hobbies?"
+    },
+    "answers": {
+      "skills": "Alex has 6+ years with Vue: Vue 3 Composition API, TypeScript, Pinia and Nuxt. At emcd.io he migrated a large enterprise app from Vue 2 to Vue 3 — 25% less code and 30% faster feature delivery.",
+      "emcd": "At emcd.io (Feb 2024 — now) Alex designed the core architecture of a high-load P2P crypto marketplace with sub-100ms WebSockets sync, built an enterprise UI kit documented in Storybook and mapped 1:1 to Figma, and integrated Claude & Gemini into the team's engineering workflow.",
+      "hobby": "Outside of code Alex is into photography, traveling and story-driven video games — he says they train the same eye for detail that frontend work needs.",
+      "fallback": "Good question! For now I'm a demo twin running on mock data. For anything deeper, ping the real Alex on Telegram or by email — links are in the contact section.",
+      "error": "Something went wrong while sending your message. Please try again.",
+      "rateLimited": "I've hit the free usage limit for now — please try again in a minute, or reach Alex directly via the contact section below."
+    }
   }
 }
