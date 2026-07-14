@@ -22,18 +22,11 @@
 
     <!-- Moving glare -->
     <div class="photo-card__glare pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
-
-    <!-- Caption -->
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
-      <p class="text-sm font-semibold text-white">{{ personalInfo.name }}</p>
-      <p class="text-xs text-white/70">{{ t('bento.hero.title') }}</p>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { portfolioData } from '@/data/portfolioData'
 // Imported (not a raw /src/... string) so Vite bundles and hashes the asset —
 // raw /src paths only work in dev and 404 in production builds
@@ -45,7 +38,6 @@ import portraitUrl from '@/assets/images/PNG/me.png'
  * prefers-reduced-motion users; a rAF guard keeps mousemove cheap.
  */
 
-const { t } = useI18n()
 const { personalInfo } = portfolioData
 
 const MAX_TILT_DEG = 9
