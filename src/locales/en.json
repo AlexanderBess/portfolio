@@ -93,7 +93,7 @@
           "location": "Novosibirsk, Russia",
           "period": "Aug 2022 — Jun 2023",
           "achievements": [
-            "Developed fault-tolerant, state-managed UI components using Vue 3 and Pinia, decreasing browser memory consumption by 20%.",
+            "Developed fault-tolerant, state-managed UI components using React, decreasing browser memory consumption by 20%.",
             "Shipped scalable, modular UI solutions for complex enterprise ERP software, reducing tech debt and speeding up integration times by 15%."
           ]
         },
@@ -102,7 +102,7 @@
           "location": "Tomsk, Russia",
           "period": "May 2021 — Jun 2022",
           "achievements": [
-            "Built blockchain-integrated web interfaces (Web3) using React.js and TypeScript, creating secure frontend layers for smart contract interaction (Ethers.js/Web3.js).",
+            "Built blockchain-integrated web interfaces (Web3) using Vue.js, Nuxt.js and TypeScript, creating secure frontend layers for smart contract interaction (Ethers.js/Web3.js).",
             "Optimized dApp state management and error handling for failed transactions, improving successful checkout rates by 18%."
           ]
         },

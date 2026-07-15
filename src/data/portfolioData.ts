@@ -117,7 +117,7 @@ export const portfolioData: PortfolioData = {
     {
       id: 'wsender',
       company: 'WSender',
-      techStack: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Three.js', 'CSS Animations', 'Figma'],
+      techStack: ['Next.js', 'React', 'TypeScript', 'Three.js', 'CSS Animations', 'Figma'],
     },
     {
       id: 'anketolog',
