@@ -6,10 +6,14 @@
       <router-view />
     </main>
     <AiTwinWidget />
+    <Analytics />
+    <SpeedInsights />
   </div>
 </template>
 
 <script setup lang="ts">
+import { Analytics } from '@vercel/analytics/vue'
+import { SpeedInsights } from '@vercel/speed-insights/vue'
 import Header from './components/Header.vue'
 import AiTwinWidget from './components/chat/AiTwinWidget.vue'
 import InteractiveGridBg from './components/InteractiveGridBg.vue'

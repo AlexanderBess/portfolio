@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.111.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "lucide-vue-next": "^1.0.0",
     "matter-js": "^0.20.0",
     "three": "^0.185.1",
