@@ -34,7 +34,7 @@ export interface Education {
 }
 
 /** Stable ids — must match the keys under `bento.projects.items` in locale files. */
-export type ProjectId = 'p2pMarketplace' | 'uiKit' | 'showcase3d' | 'surveyPlatform' | 'terrainGenerator';
+export type ProjectId = 'p2pMarketplace' | 'uiKit' | 'cryptoCard' | 'surveyPlatform' | 'terrainGenerator';
 
 export interface Project {
   /** i18n key: name/description live under `bento.projects.items.<id>` */
@@ -143,14 +143,14 @@ export const portfolioData: PortfolioData = {
   projects: [
     {
       id: 'p2pMarketplace',
-      link: 'https://emcd.io',
+      link: 'https://emcd.io/crypto-p2p/',
       techStack: ['Vue 3', 'TypeScript', 'WebSockets', 'Pinia'],
       featured: true,
     },
     {
-      id: 'showcase3d',
-      link: 'https://wsender.ru',
-      techStack: ['Next.js', 'React', 'Three.js'],
+      id: 'cryptoCard',
+      link: 'https://emcd.io/payment-card/',
+      techStack: ['Vue 3', 'TypeScript', 'Pinia', 'Figma'],
     },
     {
       id: 'uiKit',

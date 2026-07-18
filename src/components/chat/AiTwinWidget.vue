@@ -169,6 +169,12 @@ watch([() => messages.value.length, isTyping, isLoadingHistory], scrollToBottom)
   background-color: var(--card-bg);
 }
 
+/* Focus is shown by the field's own border color; the global :focus-visible
+   outline would draw a second ring around it */
+.chat-window input:focus-visible {
+  outline: none;
+}
+
 /* Window pop-in/out */
 .chat-pop-enter-active,
 .chat-pop-leave-active {

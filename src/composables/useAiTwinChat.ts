@@ -4,13 +4,14 @@ import { aiTwinService, AiTwinRateLimitError, type ChatMessage } from '@/service
 
 let messageId = 0;
 
-/** Chat state for the AI Twin widget; transport-agnostic — all backend I/O goes through `aiTwinService`. */
+// Module-scoped: the FAB widget and the fullscreen chat share one history.
+const messages = ref<ChatMessage[]>([]);
+const isTyping = ref(false);
+const isLoadingHistory = ref(false);
+
+/** Chat state for the AI twin; transport-agnostic — all backend I/O goes through `aiTwinService`. */
 export function useAiTwinChat() {
   const { t } = useI18n();
-
-  const messages = ref<ChatMessage[]>([]);
-  const isTyping = ref(false);
-  const isLoadingHistory = ref(false);
 
   function push(role: ChatMessage['role'], text: string): void {
     messages.value.push({ id: ++messageId, role, text });

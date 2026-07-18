@@ -12,6 +12,11 @@
       "darkMode": "Switch to dark theme",
       "openMenu": "Open menu",
       "closeMenu": "Close menu"
+    },
+    "mode": {
+      "label": "View mode",
+      "resume": "Resume",
+      "chat": "AI Chat"
     }
   },
   "bento": {
@@ -125,9 +130,9 @@
           "name": "P2P Crypto Marketplace",
           "description": "Core architecture of a high-load P2P cryptocurrency marketplace at emcd.io — WebSockets-driven real-time data sync with sub-100ms latency, built on Vue 3 and TypeScript."
         },
-        "showcase3d": {
-          "name": "Interactive 3D Showcase",
-          "description": "Three.js product showcase with custom scroll-driven animations for the WSender SaaS — user engagement up 45%."
+        "cryptoCard": {
+          "name": "Crypto Card",
+          "description": "Frontend for EMCD's crypto payment card product: promo pages and the application flow on Vue 3 + TypeScript, with polished animations and responsive pixel-perfect layouts."
         },
         "uiKit": {
           "name": "Enterprise UI Kit",
@@ -146,10 +151,7 @@
         "title": "More on GitHub",
         "text": "Open-source experiments and pet projects live here.",
         "cta": "Open GitHub"
-      },
-      "prev": "Previous project",
-      "next": "Next project",
-      "goTo": "Go to slide"
+      }
     },
     "contactSection": {
       "title": "Let's build something great",
@@ -178,7 +180,33 @@
       "hobby": "Outside of code Alex is into photography, traveling and story-driven video games — he says they train the same eye for detail that frontend work needs.",
       "fallback": "Good question! For now I'm a demo twin running on mock data. For anything deeper, ping the real Alex on Telegram or by email — links are in the contact section.",
       "error": "Something went wrong while sending your message. Please try again.",
-      "rateLimited": "I've hit the free usage limit for now — please try again in a minute, or reach Alex directly via the contact section below."
+      "rateLimited": "I've hit the free usage limit for now — please try again in a minute, or reach Alex directly via the contact section below.",
+      "projects": "Featured work: a high-load P2P crypto marketplace and a crypto payment card at emcd.io, an enterprise UI kit with Storybook, an SSR survey platform and a procedural terrain generator on Vue 3 + Three.js. Switch to Resume mode to see them with links.",
+      "experience": "6+ years in frontend: from full-stack junior at Chrono to Web3 interfaces at Crypton Studio, enterprise ERP UI at Tenzor, contract SSR and 3D work — and since Feb 2024, emcd.io, where he migrated the core app from Vue 2 to Vue 3 and designed the P2P marketplace architecture.",
+      "contacts": "The fastest way is Telegram @Alex_Sage or email alexbessmelcev@gmail.com. GitHub and LinkedIn links are in the hero section of the resume."
+    },
+    "fullscreen": {
+      "greeting": "Hi, I'm Alexander",
+      "subtitle": "…well, his AI twin. Ask me anything about his experience, projects, skills or how to get in touch.",
+      "hint": "Enter to send · Shift+Enter for a new line",
+      "suggestions": {
+        "projects": {
+          "title": "Show me the projects",
+          "prompt": "Tell me about Alex's featured projects"
+        },
+        "stack": {
+          "title": "What's his tech stack?",
+          "prompt": "What is Alex's tech stack?"
+        },
+        "experience": {
+          "title": "Work experience",
+          "prompt": "Tell me about Alex's work experience"
+        },
+        "contacts": {
+          "title": "How to reach him",
+          "prompt": "How can I contact Alex?"
+        }
+      }
     }
   }
 }

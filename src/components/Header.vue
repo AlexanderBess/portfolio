@@ -7,12 +7,9 @@
           AB©
         </div>
         
-        <!-- Navigation Links -->
-        <div class="header__nav-list">
-          <a href="#home" class="header__nav-link">{{ t('header.nav.home') }}</a>
-          <a href="#experience" class="header__nav-link">{{ t('header.nav.experience') }}</a>
-          <a href="#contact" class="header__nav-link">{{ t('header.nav.contact') }}</a>
-        </div>
+        <!-- Mode Switcher (Resume / AI Chat) -->
+        <ModeSwitcher />
+
 
         <!-- Right Side Controls -->
         <div class="header__controls">
@@ -62,8 +59,9 @@
             </button>
           </div>
 
-          <!-- Mobile Menu Toggle -->
+          <!-- Mobile Menu Toggle (anchor nav is useless in chat mode) -->
           <button
+            v-if="mode === 'resume'"
             @click="toggleMobileMenu"
             class="header__mobile-toggle"
             :aria-label="isMobileMenuOpen ? t('header.a11y.closeMenu') : t('header.a11y.openMenu')"
@@ -78,7 +76,7 @@
       </div>
 
       <!-- Mobile menu -->
-      <div v-if="isMobileMenuOpen" id="mobile-menu" class="header__mobile-menu">
+      <div v-if="isMobileMenuOpen && mode === 'resume'" id="mobile-menu" class="header__mobile-menu">
         <a href="#home" class="header__mobile-link">{{ t('header.nav.home') }}</a>
         <a href="#experience" class="header__mobile-link">{{ t('header.nav.experience') }}</a>
         <a href="#contact" class="header__mobile-link">{{ t('header.nav.contact') }}</a>
@@ -106,9 +104,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import ModeSwitcher from './ModeSwitcher.vue'
+import { useViewMode } from '@/composables/useViewMode'
 
 // --- GLOBAL APP STATE ---
 const { t, locale } = useI18n()
+const { mode } = useViewMode()
 const isMobileMenuOpen = ref(false)
 const isDark = ref(true)
 
@@ -251,21 +252,30 @@ onMounted(() => {
   }
 
   &__theme-toggle {
-    padding: spacing('sm');
-    border-radius: radius('md');
-    background: transparent;
-    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--chip-bg);
+    border: 1px solid var(--card-border);
     cursor: pointer;
-    transition: var(--theme-transition);
+    transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
 
     &:hover {
-      background-color: var(--bg-secondary);
+      border-color: var(--card-border-hover);
+      background-color: var(--card-bg);
+    }
+
+    &:active {
+      transform: scale(0.92);
     }
   }
 
   &__theme-icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     transition: var(--theme-transition);
 
     &--sun {
@@ -277,54 +287,86 @@ onMounted(() => {
     }
   }
 
+  // Monochrome track + pill, matching the ModeSwitcher aesthetic
   &__lang-switcher {
     display: none;
     align-items: center;
-    gap: spacing('sm');
-    border-left: 1px solid var(--border-secondary);
-    padding-left: spacing('lg');
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid #dededf;
+    border-radius: 999px;
+    background: #f0f0f2;
     transition: var(--theme-transition);
 
     @include tablet-up {
       display: flex;
     }
+
+    [data-theme='dark'] & {
+      background: #171717;
+      border-color: #262626;
+    }
   }
 
   &__lang-btn {
-    padding: spacing('xs') spacing('sm');
+    padding: 4px 12px;
     font-size: font-size('sm');
-    border-radius: radius('sm');
+    font-weight: 500;
+    border-radius: 999px;
     background: transparent;
-    border: none;
-    color: var(--text-secondary);
+    border: 1px solid transparent;
+    color: #8a8a93;
     cursor: pointer;
-    transition: var(--theme-transition);
+    transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out;
 
     &:hover {
-      color: var(--text-primary);
+      color: #52525b;
     }
 
-    &--active {
-      background-color: var(--bg-secondary);
-      color: var(--text-primary);
+    &--active,
+    &--active:hover {
+      background: #ffffff;
+      border-color: #e6e6e8;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      color: #18181b;
+    }
+
+    [data-theme='dark'] & {
+      color: #737373;
+
+      &:hover {
+        color: #d4d4d4;
+      }
+
+      &--active,
+      &--active:hover {
+        background: #000000;
+        border-color: #262626;
+        box-shadow: none;
+        color: #ffffff;
+      }
     }
   }
 
   &__mobile-toggle {
-    display: block;
-    padding: spacing('sm');
-    border-radius: radius('md');
-    background: transparent;
-    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--chip-bg);
+    border: 1px solid var(--card-border);
     cursor: pointer;
-    transition: var(--theme-transition);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      border-color: var(--card-border-hover);
+      background-color: var(--card-bg);
+    }
 
     @include tablet-up {
       display: none;
-    }
-
-    &:hover {
-      background-color: var(--bg-secondary);
     }
   }
 

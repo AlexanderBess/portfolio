@@ -32,12 +32,15 @@ function sleep(ms: number): Promise<void> {
 
 // --- Mock provider -----------------------------------------------------------
 
-type MockIntent = 'skills' | 'emcd' | 'hobby';
+type MockIntent = 'skills' | 'emcd' | 'hobby' | 'projects' | 'experience' | 'contacts';
 
 /** Order matters: first match wins. Keywords cover both locales. */
 const INTENTS: ReadonlyArray<{ intent: MockIntent; pattern: RegExp }> = [
   { intent: 'emcd', pattern: /emcd|p2p|маркетплейс|marketplace|крипт|crypto/i },
-  { intent: 'skills', pattern: /vue|react|nuxt|next|typescript|навык|скилл|skill|стек|stack|опыт|experience/i },
+  { intent: 'projects', pattern: /проект|project|портфолио|portfolio/i },
+  { intent: 'experience', pattern: /опыт|experience|карьер|career|компан|работал/i },
+  { intent: 'contacts', pattern: /контакт|contact|связ|reach|почт|email|telegram|нанять|hire/i },
+  { intent: 'skills', pattern: /vue|react|nuxt|next|typescript|навык|скилл|skill|стек|stack/i },
   { intent: 'hobby', pattern: /хобби|hobby|интерес|interest|фото|photo|игр|gam(e|ing)|путешеств|travel/i },
 ];
 
