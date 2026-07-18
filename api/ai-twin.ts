@@ -103,12 +103,28 @@ function parseMessages(body: unknown): IncomingMessage[] | null {
 
 // --- Handler -----------------------------------------------------------------------
 
-const anthropic = new Anthropic(); // ANTHROPIC_API_KEY from env
+// Lazy client: `new Anthropic()` without a key throws, and doing that at
+// module level would kill the whole function with an opaque 500
+let anthropic: Anthropic | null = null;
+
+function getClient(): Anthropic | null {
+  if (!process.env.ANTHROPIC_API_KEY) return null;
+  anthropic ??= new Anthropic();
+  return anthropic;
+}
+
 const SYSTEM_PROMPT = buildSystemPrompt();
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'method_not_allowed' });
+    return;
+  }
+
+  const client = getClient();
+  if (!client) {
+    console.error('[ai-twin] ANTHROPIC_API_KEY is not set for this environment');
+    res.status(500).json({ error: 'missing_api_key' });
     return;
   }
 
@@ -138,7 +154,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   }
 
   try {
-    const completion = await anthropic.messages.create({
+    const completion = await client.messages.create({
       model: MODEL,
       max_tokens: MAX_TOKENS,
       system: SYSTEM_PROMPT,
