@@ -7,12 +7,15 @@
           AB©
         </div>
         
-        <!-- Mode Switcher (Resume / AI Chat) -->
-        <ModeSwitcher />
+        <!-- Mode Switcher: desktop status variant (center) -->
+        <ModeSwitcher variant="status" />
 
 
         <!-- Right Side Controls -->
         <div class="header__controls">
+          <!-- Mode Switcher: mobile icon variant (mode / theme / menu row) -->
+          <ModeSwitcher variant="icon" />
+
           <!-- Theme Toggle Button -->
           <button
             @click="toggleTheme"
@@ -59,9 +62,8 @@
             </button>
           </div>
 
-          <!-- Mobile Menu Toggle (anchor nav is useless in chat mode) -->
+          <!-- Mobile Menu Toggle -->
           <button
-            v-if="mode === 'resume'"
             @click="toggleMobileMenu"
             class="header__mobile-toggle"
             :aria-label="isMobileMenuOpen ? t('header.a11y.closeMenu') : t('header.a11y.openMenu')"
@@ -76,10 +78,10 @@
       </div>
 
       <!-- Mobile menu -->
-      <div v-if="isMobileMenuOpen && mode === 'resume'" id="mobile-menu" class="header__mobile-menu">
-        <a href="#home" class="header__mobile-link">{{ t('header.nav.home') }}</a>
-        <a href="#experience" class="header__mobile-link">{{ t('header.nav.experience') }}</a>
-        <a href="#contact" class="header__mobile-link">{{ t('header.nav.contact') }}</a>
+      <div v-if="isMobileMenuOpen" id="mobile-menu" class="header__mobile-menu">
+        <a href="#home" class="header__mobile-link" @click="onNavLinkClick">{{ t('header.nav.home') }}</a>
+        <a href="#experience" class="header__mobile-link" @click="onNavLinkClick">{{ t('header.nav.experience') }}</a>
+        <a href="#contact" class="header__mobile-link" @click="onNavLinkClick">{{ t('header.nav.contact') }}</a>
         
         <!-- Mobile Language Switcher -->
         <div class="header__mobile-lang">
@@ -109,7 +111,7 @@ import { useViewMode } from '@/composables/useViewMode'
 
 // --- GLOBAL APP STATE ---
 const { t, locale } = useI18n()
-const { mode } = useViewMode()
+const { setMode } = useViewMode()
 const isMobileMenuOpen = ref(false)
 const isDark = ref(true)
 
@@ -119,6 +121,12 @@ const isDark = ref(true)
  */
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+/** Anchor targets live in resume mode — switch back before the browser scrolls. */
+const onNavLinkClick = () => {
+  setMode('resume')
+  isMobileMenuOpen.value = false
 }
 
 /**

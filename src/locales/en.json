@@ -16,7 +16,9 @@
     "mode": {
       "label": "View mode",
       "resume": "Resume",
-      "chat": "AI Chat"
+      "chat": "AI Chat",
+      "view": "View",
+      "switchTo": "Switch to"
     }
   },
   "bento": {
