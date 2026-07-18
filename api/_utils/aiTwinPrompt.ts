@@ -1,9 +1,10 @@
-import { portfolioData } from "../../src/data/portfolioData";
-import en from "../../src/locales/en.json";
+// ESM runtime ("type": "module"): relative imports need explicit extensions,
+// and JSON modules need the `with { type: 'json' }` attribute
+import { portfolioData } from '../../src/data/portfolioData.js';
+import en from '../../src/locales/en.json' with { type: 'json' };
 
 /**
  * Builds the AI twin system prompt from `portfolioData` + EN locale texts.
- * NOTE: relative imports only — this module is bundled by the Vercel function in /api, which doesn't know Vite's `@` alias.
  */
 
 const bento = en.bento;

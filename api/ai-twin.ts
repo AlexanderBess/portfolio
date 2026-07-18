@@ -1,8 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Anthropic from '@anthropic-ai/sdk';
-// NOTE: keep this import RELATIVE. The `@` alias is a Vite (frontend) alias;
-// Vercel bundles /api functions separately and cannot resolve it.
-import { buildSystemPrompt } from './_utils/aiTwinPrompt';
+// NOTE: relative import WITH the .js extension — package.json sets
+// "type": "module", so the deployed function runs as native ESM and Node
+// refuses extensionless specifiers (ERR_MODULE_NOT_FOUND).
+import { buildSystemPrompt } from './_utils/aiTwinPrompt.js';
 
 /**
  * AI Twin backend — Vercel function. POST { messages, locale? } → 200 { reply } | 429 { error: 'rate_limited' }.
