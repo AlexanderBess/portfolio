@@ -40,9 +40,10 @@
               <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-600/15">
                 <Bot class="h-5 w-5 text-primary-500" aria-hidden="true" />
               </span>
-              <p class="assistant-bubble whitespace-pre-line rounded-2xl rounded-tl-md border border-theme-border px-4 py-2.5 text-sm leading-relaxed sm:text-base">
-                {{ message.text }}
-              </p>
+              <p
+                class="assistant-bubble whitespace-pre-line rounded-2xl rounded-tl-md border border-theme-border px-4 py-2.5 text-sm leading-relaxed sm:text-base"
+                v-html="formatMessage(message.text)"
+              />
             </div>
             <div v-else class="flex max-w-[85%] flex-row-reverse gap-3">
               <img
@@ -112,6 +113,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowUp, Bot, Briefcase, FolderGit2, Layers, Mail } from 'lucide-vue-next'
 import { useAiTwinChat } from '@/composables/useAiTwinChat'
+import { formatMessage } from '@/utils/formatMessage'
 // Imported so Vite bundles the asset — raw /src/... paths 404 in production
 import userAvatarUrl from '@/assets/images/PNG/user_avatar.jpg'
 

@@ -56,12 +56,13 @@
             :class="message.role === 'user' ? 'justify-end' : 'justify-start'"
           >
             <p
-              class="max-w-[85%] whitespace-pre-line rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed"
-              :class="
-                message.role === 'user'
-                  ? 'rounded-br-md bg-primary-600 text-white'
-                  : 'rounded-bl-md border border-theme-border bg-theme-chip'
-              "
+              v-if="message.role === 'assistant'"
+              class="max-w-[85%] whitespace-pre-line rounded-2xl rounded-bl-md border border-theme-border bg-theme-chip px-3.5 py-2.5 text-sm leading-relaxed"
+              v-html="formatMessage(message.text)"
+            />
+            <p
+              v-else
+              class="max-w-[85%] whitespace-pre-line rounded-2xl rounded-br-md bg-primary-600 px-3.5 py-2.5 text-sm leading-relaxed text-white"
             >
               {{ message.text }}
             </p>
@@ -118,6 +119,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Bot, SendHorizontal, X } from 'lucide-vue-next'
 import { useAiTwinChat } from '@/composables/useAiTwinChat'
+import { formatMessage } from '@/utils/formatMessage'
 
 const { t } = useI18n()
 const { messages, isTyping, isLoadingHistory, init, send } = useAiTwinChat()
