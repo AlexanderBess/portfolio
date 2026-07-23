@@ -14,7 +14,7 @@ import { buildSystemPrompt } from './_utils/aiTwinPrompt.js';
 // --- Caps ----------------------------------------------------------------------
 const MAX_HISTORY_MESSAGES = 12;
 const MAX_MESSAGE_LENGTH = 800;
-const MAX_TOKENS = 400;
+const MAX_TOKENS = 256;
 const MODEL = 'claude-haiku-4-5-20251001';
 
 const LIMIT_PER_MINUTE = 8;
@@ -155,12 +155,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   }
 
   try {
-    const completion = await client.messages.create({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      system: SYSTEM_PROMPT,
-      messages,
-    });
+    const completion = await createWithRetry(client, messages);
 
     const reply = completion.content
       .filter((block): block is Anthropic.TextBlock => block.type === 'text')
@@ -172,4 +167,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     console.error('[ai-twin] Anthropic request failed:', error);
     res.status(502).json({ error: 'upstream_error' });
   }
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Anthropic call with prompt caching + retry on transient failures.
+ *
+ * - The system prompt (the whole resume) is large and constant, so we mark it
+ *   with cache_control: 'ephemeral' — Anthropic caches it and bills cached
+ *   input tokens at ~10% on subsequent calls, a big cost cut.
+ * - 429 / 5xx / overloaded errors are retried up to 2 times with backoff.
+ */
+async function createWithRetry(
+  client: Anthropic,
+  messages: IncomingMessage[],
+): Promise<Anthropic.Message> {
+  const maxAttempts = 3;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      return await client.messages.create({
+        model: MODEL,
+        max_tokens: MAX_TOKENS,
+        system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
+        messages,
+      });
+    } catch (error) {
+      const status = (error as { status?: number }).status;
+      const retriable = status === 429 || status === 529 || (status !== undefined && status >= 500);
+      if (!retriable || attempt === maxAttempts) throw error;
+      await sleep(300 * 2 ** (attempt - 1)); // 300ms, 600ms
+    }
+  }
+
+  // Unreachable: the loop either returns or throws
+  throw new Error('unreachable');
 }

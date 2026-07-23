@@ -36,6 +36,14 @@
           <p class="truncate text-sm font-semibold">{{ t('aiTwin.title') }}</p>
           <p class="truncate text-xs text-theme-muted">{{ t('aiTwin.subtitle') }}</p>
         </div>
+        <button
+          class="ml-auto shrink-0 rounded-lg p-1.5 text-theme-muted transition-colors hover:text-theme-text"
+          :aria-label="t('aiTwin.clear')"
+          :title="t('aiTwin.clear')"
+          @click="clear"
+        >
+          <Trash2 class="h-4 w-4" aria-hidden="true" />
+        </button>
       </header>
 
       <!-- Messages -->
@@ -55,11 +63,20 @@
             class="flex"
             :class="message.role === 'user' ? 'justify-end' : 'justify-start'"
           >
-            <p
-              v-if="message.role === 'assistant'"
-              class="max-w-[85%] whitespace-pre-line rounded-2xl rounded-bl-md border border-theme-border bg-theme-chip px-3.5 py-2.5 text-sm leading-relaxed"
-              v-html="formatMessage(message.text)"
-            />
+            <div v-if="message.role === 'assistant'" class="flex max-w-[85%] flex-col items-start gap-1">
+              <p
+                class="whitespace-pre-line rounded-2xl rounded-bl-md border border-theme-border bg-theme-chip px-3.5 py-2.5 text-sm leading-relaxed"
+                v-html="formatMessage(message.text)"
+              />
+              <button
+                v-if="message.error"
+                class="inline-flex items-center gap-1 pl-1 text-xs text-primary-500 transition-opacity hover:opacity-80"
+                @click="retry"
+              >
+                <RotateCcw class="h-3 w-3" aria-hidden="true" />
+                {{ t('aiTwin.retry') }}
+              </button>
+            </div>
             <p
               v-else
               class="max-w-[85%] whitespace-pre-line rounded-2xl rounded-br-md bg-primary-600 px-3.5 py-2.5 text-sm leading-relaxed text-white"
@@ -117,12 +134,12 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Bot, SendHorizontal, X } from 'lucide-vue-next'
+import { Bot, RotateCcw, SendHorizontal, Trash2, X } from 'lucide-vue-next'
 import { useAiTwinChat } from '@/composables/useAiTwinChat'
 import { formatMessage } from '@/utils/formatMessage'
 
 const { t } = useI18n()
-const { messages, isTyping, isLoadingHistory, init, send } = useAiTwinChat()
+const { messages, isTyping, isLoadingHistory, init, send, retry, clear } = useAiTwinChat()
 
 const isOpen = ref(false)
 const hasBeenOpened = ref(false)

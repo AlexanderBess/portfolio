@@ -209,6 +209,8 @@
           "prompt": "How can I contact Alex?"
         }
       }
-    }
+    },
+    "clear": "Clear chat",
+    "retry": "Retry"
   }
 }

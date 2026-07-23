@@ -29,6 +29,17 @@
     <!-- ═══ Dialog state: centered message feed ═══ -->
     <div v-else ref="scrollAreaRef" class="flex-1 overflow-y-auto px-4" aria-live="polite">
       <div class="mx-auto flex w-full max-w-2xl flex-col gap-4 py-6">
+        <!-- Clear chat -->
+        <div class="flex justify-end">
+          <button
+            class="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs text-theme-muted transition-colors hover:text-theme-text"
+            @click="clear"
+          >
+            <Trash2 class="h-3.5 w-3.5" aria-hidden="true" />
+            {{ t('aiTwin.clear') }}
+          </button>
+        </div>
+
         <TransitionGroup name="msg">
           <div
             v-for="message in messages"
@@ -40,10 +51,20 @@
               <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-600/15">
                 <Bot class="h-5 w-5 text-primary-500" aria-hidden="true" />
               </span>
-              <p
-                class="assistant-bubble whitespace-pre-line rounded-2xl rounded-tl-md border border-theme-border px-4 py-2.5 text-sm leading-relaxed sm:text-base"
-                v-html="formatMessage(message.text)"
-              />
+              <div class="flex flex-col items-start gap-1.5">
+                <p
+                  class="assistant-bubble whitespace-pre-line rounded-2xl rounded-tl-md border border-theme-border px-4 py-2.5 text-sm leading-relaxed sm:text-base"
+                  v-html="formatMessage(message.text)"
+                />
+                <button
+                  v-if="message.error"
+                  class="inline-flex items-center gap-1.5 pl-1 text-xs text-primary-500 transition-opacity hover:opacity-80"
+                  @click="retry"
+                >
+                  <RotateCcw class="h-3.5 w-3.5" aria-hidden="true" />
+                  {{ t('aiTwin.retry') }}
+                </button>
+              </div>
             </div>
             <div v-else class="flex max-w-[85%] flex-row-reverse gap-3">
               <img
@@ -111,14 +132,14 @@
 import type { Component } from 'vue'
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ArrowUp, Bot, Briefcase, FolderGit2, Layers, Mail } from 'lucide-vue-next'
+import { ArrowUp, Bot, Briefcase, FolderGit2, Layers, Mail, RotateCcw, Trash2 } from 'lucide-vue-next'
 import { useAiTwinChat } from '@/composables/useAiTwinChat'
 import { formatMessage } from '@/utils/formatMessage'
 // Imported so Vite bundles the asset — raw /src/... paths 404 in production
 import userAvatarUrl from '@/assets/images/PNG/user_avatar.jpg'
 
 const { t } = useI18n()
-const { messages, isTyping, send } = useAiTwinChat()
+const { messages, isTyping, send, retry, clear } = useAiTwinChat()
 
 const draft = ref('')
 const scrollAreaRef = ref<HTMLDivElement | null>(null)

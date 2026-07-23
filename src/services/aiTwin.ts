@@ -12,6 +12,8 @@ export interface ChatMessage {
   id: number;
   role: ChatRole;
   text: string;
+  /** Set on an assistant message when the request failed — enables Retry. */
+  error?: boolean;
 }
 
 export interface AiTwinProvider {
