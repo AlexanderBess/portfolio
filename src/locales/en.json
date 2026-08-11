@@ -66,7 +66,7 @@
         "emcd": {
           "role": "Frontend Engineer (Middle+ / Senior)",
           "location": "Singapore (Remote)",
-          "period": "Feb 2024 — Present",
+          "period": "Feb 2024 — Aug 2026",
           "achievements": [
             "Migrated a core enterprise application from Vue 2 (Options API) to Vue 3 (Composition API) and TypeScript, reducing codebase size by 25%, improving type safety, and cutting feature time-to-market by 30%.",
             "Designed and implemented core architecture for a high-load P2P cryptocurrency marketplace, leveraging WebSockets to achieve sub-100ms low-latency real-time data synchronization.",
