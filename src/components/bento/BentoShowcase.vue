@@ -21,6 +21,15 @@
 
         <div class="mt-auto flex flex-wrap gap-3 pt-8">
           <a
+            :href="cvUrl"
+            :download="cvFilename"
+            :aria-label="t('cv.downloadAria')"
+            class="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+          >
+            <Download class="h-4 w-4" />
+            {{ t('cv.downloadLabel') }}
+          </a>
+          <a
             v-for="link in socialLinks"
             :key="link.labelKey"
             :href="link.href"
@@ -124,12 +133,13 @@
 
 <script setup lang="ts">
 import type { Component, FunctionalComponent } from 'vue'
-import { defineAsyncComponent, h } from 'vue'
+import { computed, defineAsyncComponent, h } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   Camera,
   Compass,
   Cpu,
+  Download,
   Gamepad2,
   Github,
   Layers,
@@ -144,12 +154,17 @@ import BentoGrid from './BentoGrid.vue'
 import BentoCard, { type BentoColSpan } from './BentoCard.vue'
 import PhotoCard from './PhotoCard.vue'
 import { portfolioData, type InterestIcon, type Skills } from '@/data/portfolioData'
+import { getCvUrl, getCvFilename } from '@/utils/cv'
 
 // Lazy chunk: keeps three.js out of the main bundle
 const ThreeHeroScene = defineAsyncComponent(() => import('./ThreeHeroScene.vue'))
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { personalInfo, skills, interests } = portfolioData
+
+/** CV download always matches the active UI language (EN/RU). */
+const cvUrl = computed(() => getCvUrl(locale.value))
+const cvFilename = computed(() => getCvFilename(locale.value))
 
 // --- Reusable card heading ---------------------------------------------------
 const CardHeading: FunctionalComponent<{ icon: Component; title: string }> = (props) =>

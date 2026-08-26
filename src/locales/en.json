@@ -1,4 +1,8 @@
 {
+  "cv": {
+    "downloadLabel": "Download CV",
+    "downloadAria": "Download Alex's CV (PDF)"
+  },
   "header": {
     "name": "MARYA©",
     "nav": {
@@ -62,6 +66,7 @@
     },
     "experience": {
       "title": "Experience",
+      "recommendationLink": "View recommendation letter",
       "jobs": {
         "emcd": {
           "role": "Frontend Engineer (Middle+ / Senior)",
@@ -174,9 +179,11 @@
     "quick": {
       "skills": "What are Alex's key Vue 3 skills?",
       "emcd": "Tell me about his experience at emcd.io",
-      "hobby": "What are his hobbies?"
+      "hobby": "What are his hobbies?",
+      "cv": "Can I get his CV?"
     },
     "answers": {
+      "cv": "Sure! You can download Alex's CV as a PDF using the button below — it matches whichever language the site is set to (English or Russian).",
       "skills": "Alex has 6+ years with Vue: Vue 3 Composition API, TypeScript, Pinia and Nuxt. At emcd.io he migrated a large enterprise app from Vue 2 to Vue 3 — 25% less code and 30% faster feature delivery.",
       "emcd": "At emcd.io (Feb 2024 — now) Alex designed the core architecture of a high-load P2P crypto marketplace with sub-100ms WebSockets sync, built an enterprise UI kit documented in Storybook and mapped 1:1 to Figma, and integrated Claude & Gemini into the team's engineering workflow.",
       "hobby": "Outside of code Alex is into photography, traveling and story-driven video games — he says they train the same eye for detail that frontend work needs.",
@@ -207,6 +214,10 @@
         "contacts": {
           "title": "How to reach him",
           "prompt": "How can I contact Alex?"
+        },
+        "cv": {
+          "title": "Get his CV",
+          "prompt": "Can I download Alex's CV?"
         }
       }
     },

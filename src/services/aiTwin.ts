@@ -14,7 +14,18 @@ export interface ChatMessage {
   text: string;
   /** Set on an assistant message when the request failed — enables Retry. */
   error?: boolean;
+  /** Set on an assistant message that answers a CV/resume request — shows a Download CV button. */
+  cvRequested?: boolean;
 }
+
+/**
+ * Matches a visitor asking for the CV/resume, in either language. Shared by
+ * the mock provider (to pick the `cv` intent) and the chat composable (to
+ * decide whether to show the Download CV button under the reply — this
+ * matters for the HTTP provider too, since the real model's wording isn't
+ * guaranteed to be detectable after the fact).
+ */
+export const CV_REQUEST_PATTERN = /резюме|resume|\bcv\b/i;
 
 export interface AiTwinProvider {
   send(history: ChatMessage[], userText: string): Promise<string>;
@@ -34,10 +45,11 @@ function sleep(ms: number): Promise<void> {
 
 // --- Mock provider -----------------------------------------------------------
 
-type MockIntent = 'skills' | 'emcd' | 'hobby' | 'projects' | 'experience' | 'contacts';
+type MockIntent = 'skills' | 'emcd' | 'hobby' | 'projects' | 'experience' | 'contacts' | 'cv';
 
 /** Order matters: first match wins. Keywords cover both locales. */
 const INTENTS: ReadonlyArray<{ intent: MockIntent; pattern: RegExp }> = [
+  { intent: 'cv', pattern: CV_REQUEST_PATTERN },
   { intent: 'emcd', pattern: /emcd|p2p|маркетплейс|marketplace|крипт|crypto/i },
   { intent: 'projects', pattern: /проект|project|портфолио|portfolio/i },
   { intent: 'experience', pattern: /опыт|experience|карьер|career|компан|работал/i },

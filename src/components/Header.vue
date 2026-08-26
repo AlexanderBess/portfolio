@@ -2,11 +2,20 @@
   <header class="header">
     <nav class="header__nav" :aria-label="t('header.a11y.mainNav')">
       <div class="header__container">
-        <!-- Brand Name -->
-        <div class="header__brand">
-          AB©
-        </div>
-        
+        <!-- CV Download -->
+        <a
+          :href="cvUrl"
+          :download="cvFilename"
+          class="header__cv-btn"
+          :aria-label="t('cv.downloadAria')"
+          :title="t('cv.downloadAria')"
+        >
+          <span class="header__cv-icon">
+            <Download class="header__cv-icon-svg" aria-hidden="true" />
+          </span>
+          <span class="header__cv-btn-text">{{ t('cv.downloadLabel') }}</span>
+        </a>
+
         <!-- Mode Switcher: desktop status variant (center) -->
         <ModeSwitcher variant="status" />
 
@@ -104,16 +113,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { Download } from 'lucide-vue-next'
 import ModeSwitcher from './ModeSwitcher.vue'
 import { useViewMode } from '@/composables/useViewMode'
+import { getCvUrl, getCvFilename } from '@/utils/cv'
 
 // --- GLOBAL APP STATE ---
 const { t, locale } = useI18n()
 const { setMode } = useViewMode()
 const isMobileMenuOpen = ref(false)
 const isDark = ref(true)
+
+/** CV download always matches the active UI language (EN/RU). */
+const cvUrl = computed(() => getCvUrl(locale.value))
+const cvFilename = computed(() => getCvFilename(locale.value))
 
 /**
  * MOBILE NAVIGATION
@@ -224,14 +239,90 @@ onMounted(() => {
 
   &__container {
     @include flex-between();
+    @media (min-width: 768px) { 
+      display: grid;
+      grid-template-columns: 150px auto auto;
+    }
   }
 
-  &__brand {
-    width: 160px;
-    font-size: font-size('xl');
-    font-weight: 700;
-    color: var(--text-primary);
-    transition: var(--theme-transition);
+  // Same family as __theme-toggle / __mobile-toggle: a 38px round icon
+  // button at rest. On tablet-up hover it grows into a pill and reveals
+  // the "Download CV" label; the icon does a full roll as it settles in.
+  &__cv-btn {
+    display: inline-flex;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      border-color: var(--card-border-hover);
+      background-color: var(--card-bg);
+    }
+
+    &:active {
+      transform: scale(0.94);
+    }
+
+    @include tablet-up {
+      &:hover {
+        width: 145px;
+      }
+
+      &:hover .header__cv-icon-svg {
+        transform: rotate(360deg);
+      }
+
+      &:hover .header__cv-btn-text {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--text-primary);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+  }
+
+  &__cv-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+  }
+
+  &__cv-icon-svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &__cv-btn-text {
+    padding-right: spacing('md');
+    font-size: font-size('sm');
+    font-weight: 600;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.25s ease 0.08s, transform 0.25s ease 0.08s;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: opacity 0.2s ease;
+    }
   }
 
   &__nav-list {

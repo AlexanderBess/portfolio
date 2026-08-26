@@ -76,6 +76,15 @@
                 <RotateCcw class="h-3 w-3" aria-hidden="true" />
                 {{ t('aiTwin.retry') }}
               </button>
+              <a
+                v-if="message.cvRequested"
+                :href="cvUrl"
+                :download="cvFilename"
+                class="inline-flex items-center gap-1.5 rounded-lg border border-theme-border bg-theme-card px-2.5 py-1 text-xs font-medium text-primary-500 transition-colors hover:border-theme-border-hover"
+              >
+                <Download class="h-3 w-3" aria-hidden="true" />
+                {{ t('cv.downloadLabel') }}
+              </a>
             </div>
             <p
               v-else
@@ -134,11 +143,12 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Bot, RotateCcw, SendHorizontal, Trash2, X } from 'lucide-vue-next'
+import { Bot, Download, RotateCcw, SendHorizontal, Trash2, X } from 'lucide-vue-next'
 import { useAiTwinChat } from '@/composables/useAiTwinChat'
 import { formatMessage } from '@/utils/formatMessage'
+import { getCvUrl, getCvFilename } from '@/utils/cv'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { messages, isTyping, isLoadingHistory, init, send, retry, clear } = useAiTwinChat()
 
 const isOpen = ref(false)
@@ -148,10 +158,15 @@ const draft = ref('')
 const scrollAreaRef = ref<HTMLDivElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)
 
+/** CV download always matches the active UI language (EN/RU). */
+const cvUrl = computed(() => getCvUrl(locale.value))
+const cvFilename = computed(() => getCvFilename(locale.value))
+
 const quickQuestions = computed(() => [
   t('aiTwin.quick.skills'),
   t('aiTwin.quick.emcd'),
   t('aiTwin.quick.hobby'),
+  t('aiTwin.quick.cv'),
 ])
 
 /** Chips are shown until the visitor asks their first question. */

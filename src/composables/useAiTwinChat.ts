@@ -1,6 +1,6 @@
 import { readonly, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { aiTwinService, AiTwinRateLimitError, type ChatMessage } from '@/services/aiTwin';
+import { aiTwinService, AiTwinRateLimitError, CV_REQUEST_PATTERN, type ChatMessage } from '@/services/aiTwin';
 
 const STORAGE_KEY = 'ai-twin-chat';
 const MAX_PERSISTED = 30;
@@ -45,8 +45,8 @@ watch(
 export function useAiTwinChat() {
   const { t } = useI18n();
 
-  function push(role: ChatMessage['role'], text: string, error = false): void {
-    messages.value.push({ id: ++messageId, role, text, error });
+  function push(role: ChatMessage['role'], text: string, options: { error?: boolean; cvRequested?: boolean } = {}): void {
+    messages.value.push({ id: ++messageId, role, text, error: options.error, cvRequested: options.cvRequested });
   }
 
   /** First open: brief skeleton phase, then the localized greeting. */
@@ -60,17 +60,22 @@ export function useAiTwinChat() {
     push('assistant', t('aiTwin.greeting'));
   }
 
-  /** Core send: `history` is what the model sees; `display` is the shown text. */
-  async function ask(): Promise<void> {
+  /**
+   * Core send: `history` is what the model sees; `display` is the shown text.
+   * `cvRequested` is decided from the visitor's own message (not the reply
+   * text) so the Download CV button shows up reliably for both the mock
+   * provider and the real, less predictable HTTP-backed one.
+   */
+  async function ask(cvRequested: boolean): Promise<void> {
     isTyping.value = true;
     try {
       const userText = [...messages.value].reverse().find((m) => m.role === 'user')?.text ?? '';
       const reply = await aiTwinService.send(messages.value, userText);
-      push('assistant', reply);
+      push('assistant', reply, { cvRequested });
     } catch (error) {
       const key =
         error instanceof AiTwinRateLimitError ? 'aiTwin.answers.rateLimited' : 'aiTwin.answers.error';
-      push('assistant', t(key), true);
+      push('assistant', t(key), { error: true });
     } finally {
       isTyping.value = false;
     }
@@ -80,7 +85,7 @@ export function useAiTwinChat() {
     const trimmed = text.trim();
     if (!trimmed || isTyping.value) return;
     push('user', trimmed);
-    await ask();
+    await ask(CV_REQUEST_PATTERN.test(trimmed));
   }
 
   /** Re-run the last request after a failed assistant reply. */
@@ -89,7 +94,8 @@ export function useAiTwinChat() {
     const last = messages.value[messages.value.length - 1];
     if (!last?.error) return;
     messages.value.pop(); // drop the error bubble
-    await ask();
+    const lastUserText = [...messages.value].reverse().find((m) => m.role === 'user')?.text ?? '';
+    await ask(CV_REQUEST_PATTERN.test(lastUserText));
   }
 
   /** Wipe the conversation and re-seed the greeting. */

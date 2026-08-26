@@ -71,6 +71,17 @@
               {{ tech }}
             </span>
           </footer>
+
+          <a
+            v-if="job.recommendationUrl"
+            :href="job.recommendationUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-primary-500 transition-opacity hover:opacity-80"
+          >
+            <FileCheck class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            {{ t('bento.experience.recommendationLink') }}
+          </a>
         </BentoCard>
       </li>
     </ol>
@@ -79,7 +90,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { Briefcase, CalendarDays, ChevronRight, MapPin } from 'lucide-vue-next'
+import { Briefcase, CalendarDays, ChevronRight, FileCheck, MapPin } from 'lucide-vue-next'
 import BentoCard from './BentoCard.vue'
 import { portfolioData, type JobId } from '@/data/portfolioData'
 

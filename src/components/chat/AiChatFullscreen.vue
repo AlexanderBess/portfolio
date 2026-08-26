@@ -64,6 +64,15 @@
                   <RotateCcw class="h-3.5 w-3.5" aria-hidden="true" />
                   {{ t('aiTwin.retry') }}
                 </button>
+                <a
+                  v-if="message.cvRequested"
+                  :href="cvUrl"
+                  :download="cvFilename"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-theme-border bg-theme-chip pl-2.5 pr-3 py-1.5 text-xs font-medium text-primary-500 transition-colors hover:border-theme-border-hover"
+                >
+                  <Download class="h-3.5 w-3.5" aria-hidden="true" />
+                  {{ t('cv.downloadLabel') }}
+                </a>
               </div>
             </div>
             <div v-else class="flex max-w-[85%] flex-row-reverse gap-3">
@@ -132,24 +141,29 @@
 import type { Component } from 'vue'
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ArrowUp, Bot, Briefcase, FolderGit2, Layers, Mail, RotateCcw, Trash2 } from 'lucide-vue-next'
+import { ArrowUp, Bot, Briefcase, Download, FileText, FolderGit2, Layers, Mail, RotateCcw, Trash2 } from 'lucide-vue-next'
 import { useAiTwinChat } from '@/composables/useAiTwinChat'
 import { formatMessage } from '@/utils/formatMessage'
+import { getCvUrl, getCvFilename } from '@/utils/cv'
 // Imported so Vite bundles the asset — raw /src/... paths 404 in production
 import userAvatarUrl from '@/assets/images/PNG/user_avatar.jpg'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { messages, isTyping, send, retry, clear } = useAiTwinChat()
 
 const draft = ref('')
 const scrollAreaRef = ref<HTMLDivElement | null>(null)
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
+/** CV download always matches the active UI language (EN/RU). */
+const cvUrl = computed(() => getCvUrl(locale.value))
+const cvFilename = computed(() => getCvFilename(locale.value))
+
 /** Suggestion cards until the visitor sends their first message. */
 const isEmptyState = computed(() => !messages.value.some((m) => m.role === 'user'))
 
 interface Suggestion {
-  id: 'projects' | 'stack' | 'experience' | 'contacts'
+  id: 'projects' | 'stack' | 'experience' | 'contacts' | 'cv'
   icon: Component
 }
 
@@ -158,6 +172,7 @@ const suggestions: Suggestion[] = [
   { id: 'stack', icon: Layers },
   { id: 'experience', icon: Briefcase },
   { id: 'contacts', icon: Mail },
+  { id: 'cv', icon: FileText },
 ]
 
 function onSubmit(): void {

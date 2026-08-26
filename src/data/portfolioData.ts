@@ -25,6 +25,8 @@ export interface JobExperience {
   id: JobId;
   company: string;
   techStack: string[];
+  /** Link to a reference/confirmation letter proving this engagement; omit if none on file. */
+  recommendationUrl?: string;
 }
 
 export interface Education {
@@ -113,6 +115,7 @@ export const portfolioData: PortfolioData = {
       id: 'emcd',
       company: 'emcd.io',
       techStack: ['Vue 3', 'TypeScript', 'Composition API', 'WebSockets', 'Vite', 'Storybook', 'Figma', 'LLMs'],
+      recommendationUrl: '/docs/emcd-recommendation.pdf',
     },
     {
       id: 'wsender',

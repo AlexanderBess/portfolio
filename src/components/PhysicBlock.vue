@@ -30,15 +30,17 @@ import Matter from 'matter-js';
 const getResponsivePositions = (width: number) => {
   const isMobile = width < 768;
   const config = isMobile
-      ? { frontend: 0.2, dev: 0.5, vue: 0.7, sass: 0.8, star: 0.9, yBase: 60 }
-      : { frontend: 0.2, dev: 0.4, vue: 0.6, sass: 0.75, star: 0.9, yBase: 80 };
+      ? { frontend: 0.2, dev: 0.5, dev_second: 0.6, vue: 0.7, react: 0.7, fintech: 0.8, crypto: 0.85, star: 0.9, yBase: 60 }
+      : { frontend: 0.2, dev: 0.4, dev_second: 0.5, vue: 0.6, react: 0.7, fintech: 0.8, crypto: 0.85, star: 0.9, yBase: 80 };
 
   return [
     { text: 'FRONTEND', class: 'pill', x: width * config.frontend, y: config.yBase },
+    { text: 'REACT', class: 'pill', x: width * config.react, y: config.yBase + 30 },
     { text: 'DEVELOPER', class: 'pill', x: width * config.dev, y: config.yBase + 20 },
-    { text: 'ENGINEER', class: 'pill', x: width * config.dev, y: config.yBase + 20 },
+    { text: 'ENGINEER', class: 'pill', x: width * config.dev_second, y: config.yBase + 20 },
     { text: 'VUE', class: 'pill', x: width * config.vue, y: config.yBase + 40 },
-    { text: 'SASS', class: 'pill', hasDot: true, x: width * config.sass, y: config.yBase },
+    { text: 'FINTECH', class: 'pill', hasDot: true, x: width * config.fintech, y: config.yBase },
+    { text: 'CRYPTO', class: 'pill', hasDot: true, x: width * config.crypto, y: config.yBase },
     { text: '★', class: 'circle', icon: '★', x: width * config.star, y: config.yBase + 10 }
   ];
 };
